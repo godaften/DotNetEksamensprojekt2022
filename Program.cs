@@ -1,4 +1,6 @@
+//using cbsStudents.Data;
 using CbsStudents.Data;
+using cbsStudents.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
@@ -7,7 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<CbsStudentsContext>(options =>
-        options.UseSqlite(builder.Configuration.GetConnectionString("CbsStudentsContext")));
+     // options.UseSqlite(builder.Configuration.GetConnectionString("CbsStudentsContext")));
+      options.UseSqlServer(builder.Configuration.GetConnectionString("CbsStudentsContextConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -17,6 +20,27 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+//var appservice = builder.Build();
+
+//using (var scope = appservice.Services.CreateScope())
+//{
+//    var services = scope.ServiceProvider;
+
+//    SeedDataPosts.Initialize(services);
+//}
+
+
+
+
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

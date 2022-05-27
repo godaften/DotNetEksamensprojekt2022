@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,90 +10,85 @@ using cbsStudents.Models.Entities;
 
 namespace cbsStudents.Controllers
 {
-    public class CommentsController : Controller
+    public class EventsController : Controller
     {
         private readonly CbsStudentsContext _context;
 
-        public CommentsController(CbsStudentsContext context)
+        public EventsController(CbsStudentsContext context)
         {
             _context = context;
         }
 
-        // GET: Comments
+        // GET: Events
         public async Task<IActionResult> Index()
         {
-            var cbsStudentsContext = _context.Comment.Include(c => c.Post);
-            return View(await cbsStudentsContext.ToListAsync());
+              return View(await _context.Event.ToListAsync());
         }
 
-        // GET: Comments/Details/5
+        // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Event == null)
             {
                 return NotFound();
             }
 
-            var comment = await _context.Comment
-                .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.CommentId == id);
-            if (comment == null)
+            var @event = await _context.Event
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(comment);
+            return View(@event);
         }
 
-        // GET: Comments/Create
+        // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text");
             return View();
         }
 
-        // POST: Comments/Create
+        // POST: Events/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CommentId,Text,TimeStamp,PostId")] Comment comment)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(comment);
+                _context.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text", comment.PostId);
-            return View(comment);
+            return View(@event);
         }
 
-        // GET: Comments/Edit/5
+        // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Event == null)
             {
                 return NotFound();
             }
 
-            var comment = await _context.Comment.FindAsync(id);
-            if (comment == null)
+            var @event = await _context.Event.FindAsync(id);
+            if (@event == null)
             {
                 return NotFound();
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text", comment.PostId);
-            return View(comment);
+            return View(@event);
         }
 
-        // POST: Comments/Edit/5
+        // POST: Events/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CommentId,Text,TimeStamp,PostId")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
         {
-            if (id != comment.CommentId)
+            if (id != @event.Id)
             {
                 return NotFound();
             }
@@ -102,12 +97,12 @@ namespace cbsStudents.Controllers
             {
                 try
                 {
-                    _context.Update(comment);
+                    _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CommentExists(comment.CommentId))
+                    if (!EventExists(@event.Id))
                     {
                         return NotFound();
                     }
@@ -118,43 +113,49 @@ namespace cbsStudents.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text", comment.PostId);
-            return View(comment);
+            return View(@event);
         }
 
-        // GET: Comments/Delete/5
+        // GET: Events/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Event == null)
             {
                 return NotFound();
             }
 
-            var comment = await _context.Comment
-                .Include(c => c.Post)
-                .FirstOrDefaultAsync(m => m.CommentId == id);
-            if (comment == null)
+            var @event = await _context.Event
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(comment);
+            return View(@event);
         }
 
-        // POST: Comments/Delete/5
+        // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comment = await _context.Comment.FindAsync(id);
-            _context.Comment.Remove(comment);
+            if (_context.Event == null)
+            {
+                return Problem("Entity set 'CbsStudentsContext.Event'  is null.");
+            }
+            var @event = await _context.Event.FindAsync(id);
+            if (@event != null)
+            {
+                _context.Event.Remove(@event);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CommentExists(int id)
+        private bool EventExists(int id)
         {
-            return _context.Comment.Any(e => e.CommentId == id);
+          return _context.Event.Any(e => e.Id == id);
         }
     }
 }

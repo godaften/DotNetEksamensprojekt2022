@@ -1,9 +1,10 @@
+using CbsStudents.Data;
 using Microsoft.AspNetCore.Mvc;
 using cbsStudents.Models.Entities;
-using CbsStudents.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace cbsStudents.Controllers;
 
@@ -26,7 +27,7 @@ public class PostsController : Controller
         {
             SearchString = "";
         }
-        var posts = from p in _context.Posts select p;
+        var posts = from p in _context.Post select p;
 
         posts = posts.Where(x => x.Title.Contains(SearchString) ||
             x.Text.Contains(SearchString)).Include(y => y.User);
@@ -57,7 +58,7 @@ public class PostsController : Controller
             post.UserId = user.Id;
 
             post.Created = DateTime.Now;
-            _context.Posts.Add(post);
+            _context.Post.Add(post);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -69,7 +70,7 @@ public class PostsController : Controller
 
     public IActionResult Edit(int id)
     {
-        Post p = _context.Posts.Include(x => x.Comments).ThenInclude(x => x.User)
+        Post p = _context.Post.Include(x => x.Comments).ThenInclude(x => x.User)
             .First(x => x.Id == id);
 
         return View(p);
@@ -80,7 +81,7 @@ public class PostsController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Posts.Update(post);
+            _context.Post.Update(post);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -4,6 +4,7 @@ using CbsStudents.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace cbsStudents.Migrations
 {
     [DbContext(typeof(CbsStudentsContext))]
-    partial class CbsStudentsContextModelSnapshot : ModelSnapshot
+    [Migration("20220527160618_event")]
+    partial class @event
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,13 +231,13 @@ namespace cbsStudents.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f4e5ca95-fc4b-49e5-b7cf-9e36ee2da0db",
+                            ConcurrencyStamp = "64ca8d4e-8a7e-4682-a627-060ae50f3e8f",
                             Email = "chrk@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEGcscSoX+Px+7syPhlaEfIfdMTwuSm6oo8Zqx09yIhGiZ2ulF2tdLlZ/+SJ5dEOOhA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK+qSrVf9uegFPuC18+fejunh1YzfbWusFZ64JBz8bND8FUO9JzgXvDaoZYeJgUNjg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f62473ff-fec2-4888-8589-7fe9ab28e264",
+                            SecurityStamp = "dcee2246-1a11-46a7-b253-c21624fa9ae5",
                             TwoFactorEnabled = false,
                             UserName = "chrk@kea.dk"
                         },
@@ -243,13 +245,13 @@ namespace cbsStudents.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f77d1433-5b55-4433-b9f8-a8811d78ad51",
+                            ConcurrencyStamp = "717de56a-2aea-4b97-a4f9-fd73eddc9676",
                             Email = "test@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAENl+0CBbZqYlOHRlFORhunu24QTTsrPykHGs6rC2ll2z4Zeb05VxG/3WRx04uO3mOw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENDnUl23oi0XaAYwGRPjGShWMZdwaQTjvij6isKua+T95wYnLI2QI2aUaom8NfrYsw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e24cdff1-b5c2-4311-abfc-afdb87384ff9",
+                            SecurityStamp = "7d23690a-3d4b-4764-8e37-b769dbfdb2a6",
                             TwoFactorEnabled = false,
                             UserName = "test@kea.dk"
                         },
@@ -257,13 +259,13 @@ namespace cbsStudents.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4fce4153-fd61-4fa4-93d3-73cf7bd02ce9",
+                            ConcurrencyStamp = "433182e4-b253-4d57-9dad-12043634aff4",
                             Email = "admin@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ/fRpr+hYVZaSkFMg7hcHrd4NMQm9pbYlOWwoiX6/Ki487EM/OmKpudmqfhD0yC+g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP/iuZrA7wlZAvC6z8vOSBIMTTK64kgXzykpgmFRnYiD8M9xEZA0pNq2nvrX1rgOAw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "de2eebb8-0bbe-4a67-b448-967f8f708dd2",
+                            SecurityStamp = "85f1ed59-040a-4b88-bfe7-e86559e04dad",
                             TwoFactorEnabled = false,
                             UserName = "admin@kea.dk"
                         });
