@@ -61,6 +61,7 @@ namespace cbsStudents.Controllers
                 _context.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
+                
             }
             return View(@event);
         }
