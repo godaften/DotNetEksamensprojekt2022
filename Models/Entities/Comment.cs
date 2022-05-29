@@ -8,7 +8,7 @@ public class Comment
     public int CommentId { get; set; }
     public string Text { get; set; }
 
-    [DataType(DataType.Date)]
+    [DataType(DataType.DateTime)]
     public DateTime TimeStamp { get;  set; }
 
     public int PostId { get; set; }

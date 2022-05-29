@@ -54,7 +54,7 @@ namespace cbsStudents.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country")] Event @event)
         {
             if (ModelState.IsValid)
             {

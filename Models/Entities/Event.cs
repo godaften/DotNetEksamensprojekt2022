@@ -13,19 +13,38 @@ namespace cbsStudents.Models.Entities
     {
         public int Id { get; set; }
 
-        // Title
         public string Title { get; set; }
 
-        // Description
         public string Description { get; set; }
 
 
-        //// Event Start
-        //// [Display(Name = "Event Date")]
-        //[DataType(DataType.DateTime)]
-        ////[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", 
-        ////    ApplyFormatInEditMode = true)]
-        //public DateTime EventStartDateTime { get; set; }
+        [Display(Name = "Event Starts")]
+        [DataType(DataType.DateTime)]
+        public DateTime EventStartDateTime { get; set; }
+
+
+        [Display(Name = "Event Ends")]
+        [DataType(DataType.DateTime)]
+        public DateTime EventEndDateTime { get; set; }
+
+        // public string EventType { get; set; }
+        public bool Online { get; set; }
+
+        public string Adress { get; set; }
+
+        public string City { get; set; }
+
+        public string Country { get; set; }
+
+
+
+        //[Display(Name = "Event Startdate")]
+        //[DataType(DataType.Date)]
+        //public DateTime Date { get; set; }
+
+        //[Display(Name = "Event Starttime")]
+        //[DataType(DataType.Time)]
+        //public DateTime Time { get; set; }
 
 
         //// Price

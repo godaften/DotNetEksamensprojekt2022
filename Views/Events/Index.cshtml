@@ -18,6 +18,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+                        <th>
+                @Html.DisplayNameFor(model => model.EventStartDateTime)
+            </th>
+                        <th>
+                @Html.DisplayNameFor(model => model.EventEndDateTime)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -29,6 +35,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
+            </td>
+                        <td>
+                @Html.DisplayFor(modelItem => item.EventStartDateTime)
+            </td>
+                        <td>
+                @Html.DisplayFor(modelItem => item.EventEndDateTime)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
