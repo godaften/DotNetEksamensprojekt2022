@@ -28,6 +28,8 @@ namespace cbsStudents.Models.Entities
         public DateTime EventEndDateTime { get; set; }
 
         // public string EventType { get; set; }
+
+        [Display(Name = "Online Event?")]
         public bool Online { get; set; }
 
         public string Adress { get; set; }
