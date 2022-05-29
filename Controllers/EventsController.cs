@@ -8,25 +8,69 @@ using Microsoft.EntityFrameworkCore;
 using CbsStudents.Data;
 using cbsStudents.Models.Entities;
 
-namespace cbsStudents.Controllers
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+
+
+
+namespace cbsStudents.Controllers;
+
+    [Authorize]
+public class EventsController : Controller
 {
-    public class EventsController : Controller
+    private CbsStudentsContext _context;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager)
     {
-        private readonly CbsStudentsContext _context;
+        _userManager = userManager;
+        this._context = context;
+    }
 
-        public EventsController(CbsStudentsContext context)
-        {
-            _context = context;
-        }
+    [AllowAnonymous]
 
-        // GET: Events
-        public async Task<IActionResult> Index()
-        {
-              return View(await _context.Event.ToListAsync());
-        }
+    // SEARCHSTRING INDEX
+    //public IActionResult Index(string SearchString = "")
+    //{
+    //    if (SearchString == null)
+    //    {
+    //        SearchString = "";
+    //    }
+    //    var events = from p in _context.Event select p;
 
-        // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+    //    events = events.Where(x => x.Title.Contains(SearchString) ||
+    //        x.Description.Contains(SearchString));
+
+    //    // ViewBag.SearchString = SearchString;
+    //    var vm = new EventIndexVm
+    //    {
+    //        Events = events.ToList(),
+    //        SearchString = SearchString
+    //    };
+
+    //    return View(vm);
+    //}
+
+
+    // GAMMEL CONTROLLER
+    //public class EventsController : Controller
+    //{
+    //private readonly CbsStudentsContext _context;
+
+    //public EventsController(CbsStudentsContext context)
+    //{
+    //    _context = context;
+    //}
+
+
+    // GET: Events
+    public async Task<IActionResult> Index()
+    {
+        return View(await _context.Event.ToListAsync());
+    }
+
+    // GET: Events/Details/5
+    public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Event == null)
             {
@@ -54,7 +98,7 @@ namespace cbsStudents.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country")] Event @event)
+        public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -159,4 +203,4 @@ namespace cbsStudents.Controllers
           return _context.Event.Any(e => e.Id == id);
         }
     }
-}
+

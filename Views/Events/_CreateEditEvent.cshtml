@@ -1,0 +1,121 @@
+﻿@model cbsStudents.Models.Entities.Event
+
+
+
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    @*            TITLE*@
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control mb-3" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+
+
+    @*            EVENT START*@
+    <div class="row">
+        <label asp-for="EventStartDateTime" class="control-label"></label>
+        <div class="col">
+            <input type="time" asp-for="EventStartDateTime" class="form-control" />
+            <span asp-validation-for="EventStartDateTime" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <input type="date" asp-for="EventStartDateTime" class="form-control" />
+        </div>
+    </div>
+
+
+    @*            EVENT END*@
+    <div class="row">
+        <label asp-for="EventEndDateTime" class="control-label"></label>
+        <div class="col">
+            <input type="time" asp-for="EventEndDateTime" class="form-control" />
+            <span asp-validation-for="EventEndDateTime" class="text-danger"></span>
+        </div>
+        <div class="col">
+            <input type="date" asp-for="EventEndDateTime" class="form-control" />
+        </div>
+    </div>
+
+
+
+    @*            ONLINE EVENT?*@
+    <div class="form-group mt-3 mb-2">
+        <label asp-for="Online" class="control-label"></label>
+        <input type="checkbox" asp-for="Online" class="form-check-input" />
+        <span asp-validation-for="Online" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-3">Location</h4>
+
+
+    @*            ADRESS CITY COUNTRY*@
+    <div class="form-group">
+        <label asp-for="Adress" class="control-label"></label>
+        <input asp-for="Adress" class="form-control" />
+        <span asp-validation-for="Adress" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="City" class="control-label"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Country" class="control-label"></label>
+        <input asp-for="Country" class="form-control" />
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
+
+
+
+    @*            OLD DATE*@
+    @*            <div class="form-group">
+    <label asp-for="EventStartDateTime" class="control-label"></label>
+    <input type="time" asp-for="EventStartDateTime" class="form-control" />
+    <input type="date" asp-for="EventStartDateTime" class="form-control" />
+    <span asp-validation-for="EventStartDateTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+    <label asp-for="EventEndDateTime" class="control-label"></label>
+    <input type="time" asp-for="EventEndDateTime" class="form-control" />
+    <input type="date" asp-for="EventEndDateTime" class="form-control" />
+    <span asp-validation-for="EventEndDateTime" class="text-danger"></span>
+    </div>*@
+
+    <h4 class="mt-3">Details</h4>
+
+
+    @*TYPE OF EVENT ???*@
+    <div class="form-group">
+        <label asp-for="EventType" class="control-label"></label>
+        <select asp-for="EventType" class="form-control">
+            <option>Hej</option>
+            <option>Farvel</option>
+        </select>
+        <span asp-validation-for="EventType" class="text-danger"></span>
+    </div>
+
+
+
+    @*            DESCRIPTION*@
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    @*            SUBMIT*@
+    <div class="form-group mt-2 mb-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+
+<div>
+    <a asp-action="Index">Back to Events</a>
+</div>

@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualBasic.CompilerServices;
+using Microsoft.AspNetCore.Identity;
 
-// using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace cbsStudents.Models.Entities
 
@@ -15,8 +16,7 @@ namespace cbsStudents.Models.Entities
 
         public string Title { get; set; }
 
-        public string Description { get; set; }
-
+     
 
         [Display(Name = "Event Starts")]
         [DataType(DataType.DateTime)]
@@ -37,6 +37,11 @@ namespace cbsStudents.Models.Entities
         public string City { get; set; }
 
         public string Country { get; set; }
+
+        public string EventType { get; set; }
+
+        public string Description { get; set; }
+
 
 
 

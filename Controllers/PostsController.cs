@@ -42,6 +42,7 @@ public class PostsController : Controller
         return View(vm);
     }
 
+
     public IActionResult Create()
     {
         return View();
