@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CbsStudents.Data;
 using cbsStudents.Models.Entities;
-
+using cbsStudents.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace cbsStudents.Controllers;
 
-    [Authorize]
+[Authorize]
 public class EventsController : Controller
 {
     private CbsStudentsContext _context;
@@ -27,7 +27,7 @@ public class EventsController : Controller
         this._context = context;
     }
 
-    [AllowAnonymous]
+    // [AllowAnonymous]
 
     // SEARCHSTRING INDEX
     //public IActionResult Index(string SearchString = "")
@@ -64,10 +64,12 @@ public class EventsController : Controller
 
 
     // GET: Events
+    [AllowAnonymous]
     public async Task<IActionResult> Index()
     {
         return View(await _context.Event.ToListAsync());
     }
+
 
     // GET: Events/Details/5
     public async Task<IActionResult> Details(int? id)
@@ -98,11 +100,16 @@ public class EventsController : Controller
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] Event @event)
+        //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
+        public async Task<IActionResult> Create(EventVm @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
+            // BARN - konverter fra DateOnly og TimeOnly til DateTime. Virker ikke
+            //Event ev = new Event();
+            //ev.Title = @event.Title;
+            //ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
+            _context.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
                 
@@ -110,8 +117,24 @@ public class EventsController : Controller
             return View(@event);
         }
 
-        // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+    // BARN:
+    //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event)
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        Event ev = new Event();
+    //        ev.Title = @event.Title;
+    //        ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
+    //        _context.Add(@event);
+    //        await _context.SaveChangesAsync();
+    //        return RedirectToAction(nameof(Index));
+
+    //    }
+    //    return View(@event);
+    //}
+
+    // GET: Events/Edit/5
+    public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Event == null)
             {
