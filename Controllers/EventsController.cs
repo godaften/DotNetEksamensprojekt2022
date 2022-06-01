@@ -63,12 +63,35 @@ public class EventsController : Controller
     //}
 
 
-    // GET: Events
-    [AllowAnonymous]
-    public async Task<IActionResult> Index()
+    // GET: Events med searchString (Lavet efter Microsoft tutorial)
+    public async Task<IActionResult> Index(string searchString)
     {
-        return View(await _context.Event.ToListAsync());
+        var events = from e in _context.Event
+                     select e;
+
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            events = events.Where(s => s.Title!.Contains(searchString));
+        }
+
+        return View(await events.ToListAsync());
     }
+
+
+        // GET: Events UDEN searchString. Standard
+    //    [AllowAnonymous]
+    //public async Task<IActionResult> Index()
+    //{
+    //    return View(await _context.Event.ToListAsync());
+    //}
+
+    //// GET: Events/ShowSearchForm
+    //[AllowAnonymous]
+    //public async Task<IActionResult> ShowSearchForm()
+    //{
+    //    return View();
+    //}
+
 
 
     // GET: Events/Details/5
@@ -101,7 +124,7 @@ public class EventsController : Controller
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
-        public async Task<IActionResult> Create(EventVm @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
+        public async Task<IActionResult> Create(Event @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
         {
             if (ModelState.IsValid)
             {
@@ -134,8 +157,9 @@ public class EventsController : Controller
     //}
 
     // GET: Events/Edit/5
-    public async Task<IActionResult> Edit(int? id)
-        {
+   // public async Task<IActionResult> Edit(int? id)
+          public async Task<IActionResult> Edit(int? id)
+            {
             if (id == null || _context.Event == null)
             {
                 return NotFound();
@@ -154,9 +178,11 @@ public class EventsController : Controller
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
-        {
-            if (id != @event.Id)
+        //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
+        public async Task<IActionResult> Edit(int id, Event @event)
+
+    {
+        if (id != @event.Id)
             {
                 return NotFound();
             }

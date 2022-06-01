@@ -47,6 +47,8 @@ namespace cbsStudents.Controllers.API
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
+     
+
             if (id != @event.Id)
             {
                 return BadRequest();
@@ -62,6 +64,7 @@ namespace cbsStudents.Controllers.API
             {
                 if (!EventExists(id))
                 {
+                   
                     return NotFound();
                 }
                 else
@@ -69,8 +72,9 @@ namespace cbsStudents.Controllers.API
                     throw;
                 }
             }
+           return Ok("Event er opdateret!");
+           // return NoContent();
 
-            return NoContent();
         }
 
         // POST: api/EventsAPI
@@ -97,7 +101,8 @@ namespace cbsStudents.Controllers.API
             _context.Event.Remove(@event);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            // return NoContent();
+            return Redirect("./"); //Tilbage til oversigt
         }
 
         private bool EventExists(int id)
