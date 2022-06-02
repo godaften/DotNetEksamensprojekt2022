@@ -62,20 +62,65 @@ public class EventsController : Controller
     //    _context = context;
     //}
 
+    // GET med sorting
+    public async Task<IActionResult> Index(string sortOrder, string searchString)
+    {
+        ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title" : "";
+        ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
+        ViewData["CurrentFilter"] = searchString;
+
+        var events = from e in _context.Event
+                       select e;
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                events = events.Where(e => e.Title.Contains(searchString)
+                                       || e.Description.Contains(searchString));
+            }
+
+
+
+
+            switch (sortOrder)
+        {
+            case "title":
+                events = events.OrderBy(e => e.Title);
+                break;
+            case "Date":
+                events = events.OrderBy(s => s.EventStartDateTime);
+                break;
+                //case "date_desc":
+                //    students = students.OrderByDescending(s => s.EnrollmentDate);
+                //    break;
+                //default:
+                //    students = students.OrderBy(s => s.LastName);
+                //    break;
+        }
+        return View(await events.AsNoTracking().ToListAsync());
+    }
+
+
+
+
+
+
+
 
     // GET: Events med searchString (Lavet efter Microsoft tutorial)
-    public async Task<IActionResult> Index(string searchString)
-    {
-        var events = from e in _context.Event
-                     select e;
+    //public async Task<IActionResult> Index(string searchString)
+    //{
+    //    var events = from e in _context.Event
+    //                 select e;
 
-        if (!String.IsNullOrEmpty(searchString))
-        {
-            events = events.Where(s => s.Title!.Contains(searchString));
-        }
+    //    if (!String.IsNullOrEmpty(searchString))
+    //    {
+    //        events = events.Where(s => s.Title!.Contains(searchString));
+    //    }
 
-        return View(await events.ToListAsync());
-    }
+    //    return View(await events.ToListAsync());
+    //}
+
+
 
 
         // GET: Events UDEN searchString. Standard
