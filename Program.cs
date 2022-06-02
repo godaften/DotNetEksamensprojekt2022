@@ -1,4 +1,3 @@
-//using cbsStudents.Data;
 using CbsStudents.Data;
 using cbsStudents.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<CbsStudentsContext>(options =>
-     // options.UseSqlite(builder.Configuration.GetConnectionString("CbsStudentsContext")));
-      options.UseSqlServer(builder.Configuration.GetConnectionString("CbsStudentsContextConnection")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("CbsStudentsContextConnection")));
 
 builder.Services.AddEndpointsApiExplorer();
 

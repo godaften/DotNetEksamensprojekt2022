@@ -56,7 +56,7 @@ namespace cbsStudents.Migrations
                             CommentId = 1,
                             PostId = 1,
                             Text = "Hello",
-                            TimeStamp = new DateTime(2022, 5, 29, 16, 36, 21, 813, DateTimeKind.Local).AddTicks(6374),
+                            TimeStamp = new DateTime(2022, 6, 2, 11, 42, 51, 23, DateTimeKind.Local).AddTicks(5348),
                             UserId = "1"
                         });
                 });
@@ -108,8 +108,8 @@ namespace cbsStudents.Migrations
                             City = "Copenhagen",
                             Country = "Denmark",
                             Description = "going on!",
-                            EventEndDateTime = new DateTime(2022, 5, 29, 16, 36, 21, 813, DateTimeKind.Local).AddTicks(6397),
-                            EventStartDateTime = new DateTime(2022, 5, 29, 16, 36, 21, 813, DateTimeKind.Local).AddTicks(6395),
+                            EventEndDateTime = new DateTime(2022, 6, 2, 11, 42, 51, 23, DateTimeKind.Local).AddTicks(5369),
+                            EventStartDateTime = new DateTime(2022, 6, 2, 11, 42, 51, 23, DateTimeKind.Local).AddTicks(5367),
                             Online = false,
                             Title = "Party"
                         });
@@ -148,7 +148,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 5, 29, 16, 36, 21, 813, DateTimeKind.Local).AddTicks(6311),
+                            Created = new DateTime(2022, 6, 2, 11, 42, 51, 23, DateTimeKind.Local).AddTicks(5151),
                             Status = 0,
                             Text = "This is post 1",
                             Title = "Post no 1"
@@ -156,7 +156,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 22,
-                            Created = new DateTime(2022, 5, 29, 16, 36, 21, 813, DateTimeKind.Local).AddTicks(6345),
+                            Created = new DateTime(2022, 6, 2, 11, 42, 51, 23, DateTimeKind.Local).AddTicks(5184),
                             Status = 0,
                             Text = "This is post 2",
                             Title = "Post no 2"
@@ -164,11 +164,30 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 24,
-                            Created = new DateTime(2022, 5, 29, 16, 36, 21, 813, DateTimeKind.Local).AddTicks(6348),
+                            Created = new DateTime(2022, 6, 2, 11, 42, 51, 23, DateTimeKind.Local).AddTicks(5318),
                             Status = 0,
                             Text = "This is post 3",
                             Title = "Post no 3"
                         });
+                });
+
+            modelBuilder.Entity("cbsStudents.Models.ImageUpload", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ImageName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -292,15 +311,15 @@ namespace cbsStudents.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "67084f97-e918-4a1f-b23f-c0c77794fc90",
+                            ConcurrencyStamp = "0b205dcc-a66f-4f6c-b247-42911f8b5b4d",
                             Email = "test@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@KEA.DK",
                             NormalizedUserName = "TEST@KEA.DK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPc+y0ujPku6pXrRLx0teBnaAHiZXaCHYtj5vG7XRxLjIL695xifaOmE3BzThw1pwg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAij+ujAuHcWgBnSElVYMSvjbsslIKHnjSjcppgjXBZiI/hgEKk8NNOKwT0z4pHbJg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d0f64a96-03d6-4623-bcef-89dfd183ae9e",
+                            SecurityStamp = "d0ee9d33-4b19-4194-a79f-6beb535b7bb6",
                             TwoFactorEnabled = false,
                             UserName = "test@kea.dk"
                         },
@@ -308,15 +327,15 @@ namespace cbsStudents.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b080d4d9-b0fc-432f-b013-4d7eb70e89a0",
+                            ConcurrencyStamp = "c498af76-b2d7-42ec-9ffe-d58176b743ee",
                             Email = "jj@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JJ@KEA.DK",
                             NormalizedUserName = "JJ@KEA.DK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEALcmC6dLtlu/2W0p5sDmek/1h12H7DrzsGLyyodxFvSjJTVKPLYHZY+ykVpODin4Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECXciUlahiVCJPQPckOphbTE3uNTD6hDyWULeQVTibLWtXm6Xd1b0ANsRNTq71LoDg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "64645bb1-fc15-41d5-975c-832e5e832a78",
+                            SecurityStamp = "1afd2dee-dbfb-4723-947d-2f9e80090690",
                             TwoFactorEnabled = false,
                             UserName = "jj@kea.dk"
                         });

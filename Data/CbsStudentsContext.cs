@@ -33,6 +33,8 @@ namespace CbsStudents.Data
 
         public DbSet<Comment> Comment { get; set; }
 
+        public DbSet<ImageUpload> Images { get; set; }
+
         private void UsersSeed(ModelBuilder builder)
         {
 
@@ -92,6 +94,8 @@ namespace CbsStudents.Data
 
                );
         }
+
+
 
      
 

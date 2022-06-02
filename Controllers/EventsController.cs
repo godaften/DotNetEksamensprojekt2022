@@ -29,7 +29,7 @@ public class EventsController : Controller
 
     // [AllowAnonymous]
 
-    // SEARCHSTRING INDEX
+    // SEARCHSTRING INDEX - Christian
     //public IActionResult Index(string SearchString = "")
     //{
     //    if (SearchString == null)
@@ -62,7 +62,9 @@ public class EventsController : Controller
     //    _context = context;
     //}
 
-    // GET med sorting
+
+    // GET med sortering og filter
+    [AllowAnonymous]
     public async Task<IActionResult> Index(string sortOrder, string searchString)
     {
         ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title" : "";
@@ -78,9 +80,6 @@ public class EventsController : Controller
                                        || e.Description.Contains(searchString));
             }
 
-
-
-
             switch (sortOrder)
         {
             case "title":
@@ -89,57 +88,14 @@ public class EventsController : Controller
             case "Date":
                 events = events.OrderBy(s => s.EventStartDateTime);
                 break;
-                //case "date_desc":
-                //    students = students.OrderByDescending(s => s.EnrollmentDate);
-                //    break;
-                //default:
-                //    students = students.OrderBy(s => s.LastName);
-                //    break;
         }
         return View(await events.AsNoTracking().ToListAsync());
     }
 
 
 
-
-
-
-
-
-    // GET: Events med searchString (Lavet efter Microsoft tutorial)
-    //public async Task<IActionResult> Index(string searchString)
-    //{
-    //    var events = from e in _context.Event
-    //                 select e;
-
-    //    if (!String.IsNullOrEmpty(searchString))
-    //    {
-    //        events = events.Where(s => s.Title!.Contains(searchString));
-    //    }
-
-    //    return View(await events.ToListAsync());
-    //}
-
-
-
-
-        // GET: Events UDEN searchString. Standard
-    //    [AllowAnonymous]
-    //public async Task<IActionResult> Index()
-    //{
-    //    return View(await _context.Event.ToListAsync());
-    //}
-
-    //// GET: Events/ShowSearchForm
-    //[AllowAnonymous]
-    //public async Task<IActionResult> ShowSearchForm()
-    //{
-    //    return View();
-    //}
-
-
-
     // GET: Events/Details/5
+    [AllowAnonymous]
     public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Event == null)
@@ -201,6 +157,7 @@ public class EventsController : Controller
     //    return View(@event);
     //}
 
+
     // GET: Events/Edit/5
    // public async Task<IActionResult> Edit(int? id)
           public async Task<IActionResult> Edit(int? id)
@@ -226,7 +183,7 @@ public class EventsController : Controller
         //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
         public async Task<IActionResult> Edit(int id, Event @event)
 
-    {
+        {
         if (id != @event.Id)
             {
                 return NotFound();
