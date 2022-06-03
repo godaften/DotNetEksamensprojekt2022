@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,14 +65,17 @@ namespace cbsStudents.Controllers
         {
             if (ModelState.IsValid)
             {
-                // SAVE IMAGE TO /images
+                // SAVE IMAGE TO wwwroot/images
                 string wwwRootPath = _hostEnvironment.WebRootPath; // hostEnvironment gør det muligt at tilgå path
                 string fileName = Path.GetFileNameWithoutExtension(imageUpload.ImageFile.FileName);
                 string extension = Path.GetExtension(imageUpload.ImageFile.FileName);
-                imageUpload.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                imageUpload.ImageName=fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
                 string path = Path.Combine(wwwRootPath + "/images/", fileName);
                 using (var fileStream = new FileStream(path,FileMode.Create))
-
+                {
+                    await imageUpload.ImageFile.CopyToAsync(fileStream);
+                }
+          
                 // INSERT RECORD IN DB
                 _context.Add(imageUpload);
                 await _context.SaveChangesAsync();
@@ -171,5 +176,35 @@ namespace cbsStudents.Controllers
         {
           return _context.Images.Any(e => e.Id == id);
         }
+
+
+        //// FRA MICROSOFT TUTORIAL
+        //// https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-6.0
+        //public async Task<IActionResult> OnPostUploadAsync()
+        //{
+        //    using (var memoryStream = new MemoryStream())
+        //    {
+        //        await FileUpload.FormFile.CopyToAsync(memoryStream);
+
+        //        // Upload the file if less than 2 MB
+        //        if (memoryStream.Length < 2097152)
+        //        {
+        //            var file = new AppFile()
+        //            {
+        //                Content = memoryStream.ToArray()
+        //            };
+
+        //            _dbContext.File.Add(file);
+
+        //            await _dbContext.SaveChangesAsync();
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("File", "The file is too large.");
+        //        }
+        //    }
+
+        //    return Page();
+        //}
     }
 }
