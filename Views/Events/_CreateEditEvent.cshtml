@@ -110,9 +110,21 @@
         <span asp-validation-for="Description" class="text-danger"></span>
     </div>
 
+
+    @*IMAGE UPLOAD*@
+           @*    <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
+@*            <div>
+                <label asp-for="ImageFile" class="control-label"></label>
+                <input asp-for="ImageFile" accept="image/*" />
+                <span asp-validation-for="ImageFile" class="text-danger"></span>
+            </div>
+          *@
+
+
+
     @*            SUBMIT*@
     <div class="form-group mt-2 mb-3">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input asp-page-handler="Upload" input type="submit" value="Create" class="btn btn-primary" />
     </div>
 @*</form>*@
 

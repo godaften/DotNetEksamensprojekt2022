@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,11 +22,27 @@ public class EventsController : Controller
     private CbsStudentsContext _context;
     private readonly UserManager<IdentityUser> _userManager;
 
+    private readonly IWebHostEnvironment _hostEnvironment;
+
+
     public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager)
     {
         _userManager = userManager;
         this._context = context;
     }
+
+
+    //// IMAGEUPLOAD
+    //public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment hostEnvironment)
+    //{
+    //    _userManager = userManager;
+    //    this._context = context;
+    //    this._hostEnvironment = hostEnvironment;
+    //}
+
+
+
+
 
     // [AllowAnonymous]
 
@@ -133,13 +150,39 @@ public class EventsController : Controller
             //Event ev = new Event();
             //ev.Title = @event.Title;
             //ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
+
+            //// SAVE IMAGE TO wwwroot/images
+            //string wwwRootPath = _hostEnvironment.WebRootPath; // hostEnvironment gør det muligt at tilgå path
+            //string fileName = Path.GetFileNameWithoutExtension(@event.ImageFile.FileName);
+            //string extension = Path.GetExtension(@event.ImageFile.FileName);
+            //@event.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+            //string path = Path.Combine(wwwRootPath + "/images/", fileName);
+            //using (var fileStream = new FileStream(path, FileMode.Create))
+            //{
+            //    await @event.ImageFile.CopyToAsync(fileStream);
+            //}
+
+
+
+
+            // INSERT RECORD IN DB
             _context.Add(@event);
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
                 
             }
+
             return View(@event);
         }
+
+
+
+
+
+
+
+
+
 
     // BARN:
     //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event)
@@ -159,8 +202,8 @@ public class EventsController : Controller
 
 
     // GET: Events/Edit/5
-   // public async Task<IActionResult> Edit(int? id)
-          public async Task<IActionResult> Edit(int? id)
+    // public async Task<IActionResult> Edit(int? id)
+    public async Task<IActionResult> Edit(int? id)
             {
             if (id == null || _context.Event == null)
             {

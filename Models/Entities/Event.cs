@@ -6,6 +6,7 @@ using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.AspNetCore.Identity;
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace cbsStudents.Models.Entities
 
@@ -48,6 +49,14 @@ namespace cbsStudents.Models.Entities
 
         public string Description { get; set; }
 
+        
+        [DisplayName("Image Name")]
+        public string ImageName { get; set; }
+
+
+        [NotMapped]
+        [DisplayName("Upload Image")]
+        public IFormFile ImageFile { get; set; }
 
 
 
