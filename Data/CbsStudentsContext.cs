@@ -21,8 +21,10 @@ namespace CbsStudents.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            this.SeedEventTypes(builder);
             this.UsersSeed(builder);
             this.SeedPosts(builder);
+            this.SeedVenues(builder);
             this.SeedComments(builder);
             this.SeedEvents(builder);
         }
@@ -30,6 +32,9 @@ namespace CbsStudents.Data
         public DbSet<Post> Post { get; set; }
 
         public DbSet<Event> Event { get; set; }
+
+        public DbSet<EventType> EventType { get; set; }
+        public DbSet<Venue> Venue { get; set; }
 
         public DbSet<Comment> Comment { get; set; }
 
@@ -83,6 +88,23 @@ namespace CbsStudents.Data
             builder.Entity<Comment>().HasData(
                 new Comment() { CommentId = 1, Text = "Hello", TimeStamp = DateTime.Now, PostId = 1, UserId = "1" }
             );
+        }
+
+        private void SeedEventTypes(ModelBuilder builder)
+        {
+            builder.Entity<EventType>().HasData(
+                new EventType() { Id = 1, Name = "Concert" },
+                new EventType() { Id = 2, Name = "Comedy" },
+                new EventType() { Id = 3, Name = "Sport" });
+        }
+
+
+        private void SeedVenues(ModelBuilder builder)
+        {
+            builder.Entity<Venue>().HasData(
+                new Venue() { Id = 1, Name = "Green Stage" },
+                new Venue() { Id = 2, Name = "Small Room" },
+                new Venue() { Id = 3, Name = "Hall" });
         }
 
 

@@ -175,11 +175,7 @@ public class EventsController : Controller
             return View(@event);
         }
 
-
-
-
-
-
+    
 
 
 

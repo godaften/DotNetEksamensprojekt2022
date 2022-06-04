@@ -93,10 +93,12 @@
 
     @*TYPE OF EVENT ???*@
     <div class="form-group">
-        <label asp-for="EventType" class="control-label"></label>
-        <select asp-for="EventType" class="form-control">
-            <option>Hej</option>
-            <option>Farvel</option>
+        <label asp-for="EventGenre" class="control-label"></label>
+        <select asp-for="EventGenre" class="form-control">
+            <option>Concert</option>
+            <option>Comedy</option>
+            <option>Sport</option>
+
         </select>
         <span asp-validation-for="EventType" class="text-danger"></span>
     </div>
@@ -119,7 +121,6 @@
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
           *@
-
 
 
     @*            SUBMIT*@

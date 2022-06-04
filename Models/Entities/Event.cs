@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 using System.Collections.Generic;
 using System.ComponentModel;
+//using cbsStudents.Models;
 
 namespace cbsStudents.Models.Entities
 
@@ -26,6 +27,7 @@ namespace cbsStudents.Models.Entities
      
 
         [Display(Name = "Event Starts")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{:MM/dd/yyyy}")]
         [DataType(DataType.DateTime)]
         public DateTime EventStartDateTime { get; set; }
 
@@ -45,11 +47,14 @@ namespace cbsStudents.Models.Entities
 
         public string Country { get; set; }
 
-        public string EventType { get; set; }
+
+        public string EventGenre { get; set; }
 
         public string Description { get; set; }
 
-        
+
+
+
         [DisplayName("Image Name")]
         public string ImageName { get; set; }
 
@@ -57,6 +62,31 @@ namespace cbsStudents.Models.Entities
         [NotMapped]
         [DisplayName("Upload Image")]
         public IFormFile ImageFile { get; set; }
+
+
+
+
+
+
+
+
+
+        // Navigation Properties Eventtype
+        public int? EventTypeId { get; set; }
+        public EventType EventType { get; set; }
+
+
+
+
+
+        // Navigation Properties Venue
+        public int? VenueId { get; set; }
+        public Venue Venue { get; set; }
+
+
+
+
+
 
 
 
