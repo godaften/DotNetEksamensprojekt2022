@@ -102,9 +102,9 @@ namespace CbsStudents.Data
         private void SeedVenues(ModelBuilder builder)
         {
             builder.Entity<Venue>().HasData(
-                new Venue() { Id = 1, Name = "Green Stage" },
-                new Venue() { Id = 2, Name = "Small Room" },
-                new Venue() { Id = 3, Name = "Hall" });
+                new Venue() { VenueId = "1", Name = "Green Stage" },
+                new Venue() { VenueId = "2", Name = "Small Room" });
+               
         }
 
 

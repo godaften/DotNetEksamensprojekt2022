@@ -80,7 +80,7 @@ namespace cbsStudents.Models.Entities
 
 
         // Navigation Properties Venue
-        public int? VenueId { get; set; }
+        public String? VenueId { get; set; }
         public Venue Venue { get; set; }
 
 

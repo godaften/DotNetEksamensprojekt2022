@@ -136,17 +136,22 @@ public class EventsController : Controller
             return View();
         }
 
-        // POST: Events/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
-        public async Task<IActionResult> Create(Event @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
+
+
+
+
+    // STANDARD POST DER VIRKER
+    //POST: Events/Create
+    //To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+   [HttpPost]
+    [ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
+    public async Task<IActionResult> Create(Event @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
+    {
+        if (ModelState.IsValid)
         {
-            if (ModelState.IsValid)
-            {
-            // BARN - konverter fra DateOnly og TimeOnly til DateTime. Virker ikke
+            //Konverter fra DateOnly og TimeOnly til DateTime. Virker ikke
             //Event ev = new Event();
             //ev.Title = @event.Title;
             //ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
@@ -163,24 +168,54 @@ public class EventsController : Controller
             //}
 
 
-
-
             // INSERT RECORD IN DB
             _context.Add(@event);
             await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-                
-            }
+            return RedirectToAction(nameof(Index));
 
-            return View(@event);
         }
 
-    
+        return View(@event);
+    }
 
 
 
+    // *********** TESTE POSTMETODER START
 
-    // BARN:
+    //// POST MED SELECTLIST VENUES
+    //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    ////public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
+    //public async Task<IActionResult> Create(Event @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
+    //{
+    //    if (ModelState.IsValid)
+    //    {
+    //        EventCreateVm eventCreateVm = new EventCreateVm();
+    //        eventCreateVm.Event = new Event();
+    //        List<SelectListItem> venues = _context.Venue
+    //              .Select(n => new SelectListItem
+    //            {
+    //                Value = n.VenueId,
+    //                Text = n.Name
+    //            }).ToList();
+
+    //        eventCreateVm.Venue = venues;
+
+
+    //        // INSERT RECORD IN DB
+    //        _context.Add(@event);
+    //        await _context.SaveChangesAsync();
+    //        return RedirectToAction(nameof(Index));
+
+    //    }
+
+    //    return View(@event);
+    //}
+
+
+
+    // NY DateOnly og TimeOnly - virkede ikke...
     //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event)
     //{
     //    if (ModelState.IsValid)
@@ -195,6 +230,10 @@ public class EventsController : Controller
     //    }
     //    return View(@event);
     //}
+
+    // *********** TESTE POSTMETODER SLUT
+
+
 
 
     // GET: Events/Edit/5
