@@ -27,16 +27,6 @@ public class EventsController : Controller
 
 
 
-    //// IMAGE
-    //public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
-    //{
-    //    _context = context;
-    //    _webHost = webHost;
-
-    //}
-
-
-
     // public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment webHost)
     public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
     {
@@ -46,58 +36,11 @@ public class EventsController : Controller
     }
 
 
-    //// IMAGEUPLOAD
-    //public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment hostEnvironment)
-    //{
-    //    _userManager = userManager;
-    //    this._context = context;
-    //    this._hostEnvironment = hostEnvironment;
-    //}
-
-
-
-
-
-    // [AllowAnonymous]
-
-    // SEARCHSTRING INDEX - Christian
-    //public IActionResult Index(string SearchString = "")
-    //{
-    //    if (SearchString == null)
-    //    {
-    //        SearchString = "";
-    //    }
-    //    var events = from p in _context.Event select p;
-
-    //    events = events.Where(x => x.Title.Contains(SearchString) ||
-    //        x.Description.Contains(SearchString));
-
-    //    // ViewBag.SearchString = SearchString;
-    //    var vm = new EventIndexVm
-    //    {
-    //        Events = events.ToList(),
-    //        SearchString = SearchString
-    //    };
-
-    //    return View(vm);
-    //}
-
-
-    // GAMMEL CONTROLLER
-    //public class EventsController : Controller
-    //{
-    //private readonly CbsStudentsContext _context;
-
-    //public EventsController(CbsStudentsContext context)
-    //{
-    //    _context = context;
-    //}
-
-
     // GET med sortering og filter
     [AllowAnonymous]
     public async Task<IActionResult> Index(string sortOrder, string searchString)
     {
+        // HVAD SKER DER?
         ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title" : "";
         ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
         ViewData["CurrentFilter"] = searchString;
@@ -135,7 +78,7 @@ public class EventsController : Controller
         }
 
         var @event = await _context.Event
-            .FirstOrDefaultAsync(m => m.Id == id);
+            .FirstOrDefaultAsync(m => m.Id == id); // ?
         if (@event == null)
         {
             return NotFound();
@@ -143,7 +86,6 @@ public class EventsController : Controller
 
         return View(@event);
     }
-
 
 
 
@@ -159,21 +101,14 @@ public class EventsController : Controller
 
 
 
-
-
     //POST: Events/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
+
     public async Task<IActionResult> Create(EventCreateEditVm vm)
     {
         if (ModelState.IsValid)
         {
-            //Konverter fra DateOnly og TimeOnly til DateTime. Virker ikke
-            //Event ev = new Event();
-            //ev.Title = @event.Title;
-            //ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
-
 
             // IMAGE
             string uniqueFileName = GetUploadedFileName(vm);
@@ -243,22 +178,6 @@ public class EventsController : Controller
 
 
 
-    // NY DateOnly og TimeOnly - virkede ikke...
-    //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event)
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        Event ev = new Event();
-    //        ev.Title = @event.Title;
-    //        ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
-    //        _context.Add(@event);
-    //        await _context.SaveChangesAsync();
-    //        return RedirectToAction(nameof(Index));
-
-    //    }
-    //    return View(@event);
-    //}
-
     // *********** TESTE POSTMETODER SLUT
 
 
@@ -284,11 +203,9 @@ public class EventsController : Controller
     }
 
     // POST: Events/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
     [HttpPost]
     [ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
     public async Task<IActionResult> Edit(int id, Event @event)
 
     {
@@ -320,6 +237,7 @@ public class EventsController : Controller
         return View(@event);
     }
 
+
     // GET: Events/Delete/5
     public async Task<IActionResult> Delete(int? id)
     {
@@ -337,6 +255,7 @@ public class EventsController : Controller
 
         return View(@event);
     }
+
 
     // POST: Events/Delete/5
     [HttpPost, ActionName("Delete")]

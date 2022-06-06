@@ -1,13 +1,13 @@
-﻿using cbsStudents.Models.Entities;
+﻿//using cbsStudents.Models.Entities;
 
-namespace cbsStudents.ViewModels
-{
-    public class EventVm : Event
-    {
+//namespace cbsStudents.ViewModels
+//{
+//    public class EventVm : Event
+//    {
 
-        //public DateOnly EventStartDate { get; set; }
+//        //public DateOnly EventStartDate { get; set; }
 
-        //public TimeOnly EventStartTime { get; set; }
+//        //public TimeOnly EventStartTime { get; set; }
 
-    }
-}
+//    }
+//}

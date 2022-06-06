@@ -21,7 +21,7 @@ namespace CbsStudents.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            this.SeedEventTypes(builder);
+            //this.SeedEventTypes(builder);
             this.UsersSeed(builder);
             this.SeedPosts(builder);
             this.SeedVenues(builder);
@@ -33,12 +33,12 @@ namespace CbsStudents.Data
 
         public DbSet<Event> Event { get; set; }
 
-        public DbSet<EventType> EventType { get; set; }
+        //public DbSet<EventType> EventType { get; set; }
         public DbSet<Venue> Venue { get; set; }
 
         public DbSet<Comment> Comment { get; set; }
 
-        public DbSet<ImageUpload> Images { get; set; }
+        //public DbSet<ImageUpload> Images { get; set; }
 
         private void UsersSeed(ModelBuilder builder)
         {
@@ -90,20 +90,20 @@ namespace CbsStudents.Data
             );
         }
 
-        private void SeedEventTypes(ModelBuilder builder)
-        {
-            builder.Entity<EventType>().HasData(
-                new EventType() { Id = 1, Name = "Concert" },
-                new EventType() { Id = 2, Name = "Comedy" },
-                new EventType() { Id = 3, Name = "Sport" });
-        }
+        //private void SeedEventTypes(ModelBuilder builder)
+        //{
+        //    builder.Entity<EventType>().HasData(
+        //        new EventType() { Id = 1, Name = "Concert" },
+        //        new EventType() { Id = 2, Name = "Comedy" },
+        //        new EventType() { Id = 3, Name = "Sport" });
+        //}
 
 
         private void SeedVenues(ModelBuilder builder)
         {
             builder.Entity<Venue>().HasData(
-                new Venue() { VenueId = "1", Name = "Green Stage" },
-                new Venue() { VenueId = "2", Name = "Small Room" });
+                new Venue() { VenueId = "1", Name = "Green Stage", NumberOfSeats = 100 },
+                new Venue() { VenueId = "2", Name = "Small Room", NumberOfSeats = 200 });
                
         }
 
@@ -111,7 +111,7 @@ namespace CbsStudents.Data
         private void SeedEvents(ModelBuilder builder)
         {
             builder.Entity<Event>().HasData(
-                new Event() { Id = 10, Title = "Party", Description = "going on!", EventStartDateTime = DateTime.Now, 
+                new Event() { Id = 100, Title = "Party", Description = "going on!", EventStartDateTime = DateTime.Now, 
                     EventEndDateTime = DateTime.Now, Online=false, Adress ="Funnystreet 10", City ="Copenhagen", Country ="Denmark"}
 
                );

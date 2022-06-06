@@ -1,9 +1,11 @@
-
-    
 //namespace cbsStudents.Models.Entities;
+using cbsStudents.Models.Entities;
 
-//public class EventIndexVm
-//{
-//    public IEnumerable<Event> Events { get; set; }
-//    public string SearchString { get; set; }
-//}
+namespace cbsStudents.ViewModels;
+
+
+public class EventIndexVm
+{
+    public IEnumerable<Event> Events { get; set; }
+    public string SearchString { get; set; }
+}

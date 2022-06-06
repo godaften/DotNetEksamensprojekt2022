@@ -9,40 +9,27 @@ namespace cbsStudents.ViewModels
     public class EventCreateEditVm
     {
         public int Id { get; set; }
-
         public string Title { get; set; }
 
-
-
         // EVENT START DATO
-        [Display(Name = "Event Starts")]
-        //[DataType(DataType.DateTime)]
+        [Display(Name = "Event Date")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}", ApplyFormatInEditMode = true)]
         public DateTime EventStartDate { get; set; }
 
-
         // EVENT START TID
-        // [DataType(DataType.DateTime)]
+        [Display(Name = "Event Time")]
         [DataType(DataType.Time)]
         public DateTime EventStartTime { get; set; }
 
-
-
-        //// EVENT START 
-        //[Display(Name = "Event Starts")]
-        //[DataType(DataType.DateTime)]
-        //public DateTime EventStartDateTime { get; set; }
-
-
-
-        // EVENT SLUT
+        // EVENT END DATO
         [Display(Name = "Event Ends")]
-        [DataType(DataType.DateTime)]
-        public DateTime EventEndDateTime { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime EventEndDate { get; set; }
 
+        // EVENT END TID
+        [DataType(DataType.Time)]
+        public DateTime EventEndTime { get; set; }
 
-        // public string EventType { get; set; }
 
         [Display(Name = "Online Event?")]
         public bool Online { get; set; }
@@ -58,23 +45,13 @@ namespace cbsStudents.ViewModels
         public string Description { get; set; }
 
 
-
-
+        // IMAGE UPLOAD
         [DisplayName("Image Name")]
         public string ImageName { get; set; }
 
-
-        [NotMapped]
+        //[NotMapped]
         [DisplayName("Upload Image")]
         public IFormFile ImageFile { get; set; }
-
-
-
-
-        // Navigation Properties Eventtype SLETTES
-        public int EventTypeId { get; set; }
-        public EventType EventType { get; set; }
-
 
 
         // Navigation Properties Venue
@@ -84,8 +61,15 @@ namespace cbsStudents.ViewModels
 
 
         // Giver ikke mening for databasemodellen, men perfekt mening for vm
-        public string chosenVenueId{ get; set; }
+        public string chosenVenueId { get; set; }
         public IEnumerable<SelectListItem> Venues { get; set; }
+
+
+        //// Navigation Properties Eventtype SLETTES
+        //public int EventTypeId { get; set; }
+        //public EventType EventType { get; set; }
+
+
 
     }
 }

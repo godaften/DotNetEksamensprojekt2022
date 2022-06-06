@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CbsStudents.Data;
 using cbsStudents.Models.Entities;
+using cbsStudents.ViewModels;
 
 namespace cbsStudents.Controllers
 {
@@ -54,7 +55,7 @@ namespace cbsStudents.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VenueId,Name,NumberOfSeats")] Venue venue)
+        public async Task<IActionResult> Create(VenueVm venue)
         {
             if (ModelState.IsValid)
             {
