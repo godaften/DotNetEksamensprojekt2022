@@ -70,6 +70,7 @@ namespace cbsStudents.Controllers
                 string fileName = Path.GetFileNameWithoutExtension(imageUpload.ImageFile.FileName);
                 string extension = Path.GetExtension(imageUpload.ImageFile.FileName);
                 imageUpload.ImageName=fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                imageUpload.ImageName = fileName = fileName + Guid.NewGuid() + extension; //GUID TJEK OP PÅ
                 string path = Path.Combine(wwwRootPath + "/images/", fileName);
                 using (var fileStream = new FileStream(path,FileMode.Create))
                 {

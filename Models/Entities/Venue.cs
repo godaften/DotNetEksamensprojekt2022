@@ -2,7 +2,7 @@
 
 namespace cbsStudents.Models.Entities
 {
-    public class Venue  
+    public class Venue
     {
         //public int Id { get; set; }
 

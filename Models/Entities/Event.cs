@@ -66,53 +66,18 @@ namespace cbsStudents.Models.Entities
 
 
 
-
-
-
-
-
         // Navigation Properties Eventtype
         public int? EventTypeId { get; set; }
         public EventType EventType { get; set; }
 
 
 
-
-
         // Navigation Properties Venue
-        public String? VenueId { get; set; }
+        public string VenueId { get; set; }
         public Venue Venue { get; set; }
 
 
 
-
-
-
-
-
-        //[Display(Name = "Event Startdate")]
-        //[DataType(DataType.Date)]
-        //public DateTime Date { get; set; }
-
-        //[Display(Name = "Event Starttime")]
-        //[DataType(DataType.Time)]
-        //public DateTime Time { get; set; }
-
-
-        //// Price
-        //// [Range(1, 100)]
-        //[DataType(DataType.Currency)]
-        //[Column(TypeName = "decimal(18, 2)")]
-        //public decimal Price { get; set; }
-
     }
 
 }
-//// VIEWMODEL LAVE ? 
-//    public class EventViewModel
-//    {
-//        public List<Event>? Events { get; set; }
-//        public SelectList? Titles { get; set; }
-//        public string? MovieGenre { get; set; }
-//        public string? SearchString { get; set; }
-//    }

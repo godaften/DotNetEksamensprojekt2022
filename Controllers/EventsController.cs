@@ -11,24 +11,38 @@ using cbsStudents.Models.Entities;
 using cbsStudents.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-
-
+using cbsStudents.Mappers;
 
 namespace cbsStudents.Controllers;
+
 
 [Authorize]
 public class EventsController : Controller
 {
     private CbsStudentsContext _context;
-    private readonly UserManager<IdentityUser> _userManager;
 
-    private readonly IWebHostEnvironment _hostEnvironment;
+    // private readonly UserManager<IdentityUser> _userManager;
+
+    private readonly IWebHostEnvironment _webHost; // IMAGE
 
 
-    public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager)
+
+    //// IMAGE
+    //public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
+    //{
+    //    _context = context;
+    //    _webHost = webHost;
+
+    //}
+
+
+
+    // public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment webHost)
+    public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
     {
-        _userManager = userManager;
+        //   _userManager = userManager;
         this._context = context;
+        _webHost = webHost;
     }
 
 
@@ -89,15 +103,15 @@ public class EventsController : Controller
         ViewData["CurrentFilter"] = searchString;
 
         var events = from e in _context.Event
-                       select e;
-            
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                events = events.Where(e => e.Title.Contains(searchString)
-                                       || e.Description.Contains(searchString));
-            }
+                     select e;
 
-            switch (sortOrder)
+        if (!String.IsNullOrEmpty(searchString))
+        {
+            events = events.Where(e => e.Title.Contains(searchString)
+                                   || e.Description.Contains(searchString));
+        }
+
+        switch (sortOrder)
         {
             case "title":
                 events = events.OrderBy(e => e.Title);
@@ -114,40 +128,44 @@ public class EventsController : Controller
     // GET: Events/Details/5
     [AllowAnonymous]
     public async Task<IActionResult> Details(int? id)
+    {
+        if (id == null || _context.Event == null)
         {
-            if (id == null || _context.Event == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await _context.Event
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
+            return NotFound();
         }
 
-        // GET: Events/Create
-        public IActionResult Create()
+        var @event = await _context.Event
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (@event == null)
         {
-            return View();
+            return NotFound();
         }
 
+        return View(@event);
+    }
 
 
 
 
-    // STANDARD POST DER VIRKER
+    // GET: Events/Create
+    public IActionResult Create()
+    {
+        var vm = new EventCreateEditVm();
+
+        vm.Venues = _context.Venue.ToList().Select(x => new SelectListItem(x.Name, x.VenueId.ToString()));
+
+        return View(vm);
+    }
+
+
+
+
+
     //POST: Events/Create
-    //To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-   [HttpPost]
+    [HttpPost]
     [ValidateAntiForgeryToken]
     //public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
-    public async Task<IActionResult> Create(Event @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
+    public async Task<IActionResult> Create(EventCreateEditVm vm)
     {
         if (ModelState.IsValid)
         {
@@ -156,17 +174,11 @@ public class EventsController : Controller
             //ev.Title = @event.Title;
             //ev.EventStartDateTime = @event.EventStartDate.ToDateTime(@event.EventStartTime);
 
-            //// SAVE IMAGE TO wwwroot/images
-            //string wwwRootPath = _hostEnvironment.WebRootPath; // hostEnvironment gør det muligt at tilgå path
-            //string fileName = Path.GetFileNameWithoutExtension(@event.ImageFile.FileName);
-            //string extension = Path.GetExtension(@event.ImageFile.FileName);
-            //@event.ImageName = fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-            //string path = Path.Combine(wwwRootPath + "/images/", fileName);
-            //using (var fileStream = new FileStream(path, FileMode.Create))
-            //{
-            //    await @event.ImageFile.CopyToAsync(fileStream);
-            //}
 
+            // IMAGE
+            string uniqueFileName = GetUploadedFileName(vm);
+            vm.ImageName = uniqueFileName;
+            var @event = new EventMapper().mapFromViewToEvent(vm); // MAPPER
 
             // INSERT RECORD IN DB
             _context.Add(@event);
@@ -175,7 +187,24 @@ public class EventsController : Controller
 
         }
 
-        return View(@event);
+        return View(vm);
+    }
+
+    private string GetUploadedFileName(EventCreateEditVm vm)
+    {
+        string uniqueFileName = null;
+
+        if (vm.ImageFile != null)
+        {
+            string uploadsFolder = Path.Combine(_webHost.WebRootPath, "images");
+            uniqueFileName = Guid.NewGuid().ToString() + "_" + vm.ImageFile.FileName;
+            string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                vm.ImageFile.CopyTo(fileStream);
+            }
+        }
+        return uniqueFileName;
     }
 
 
@@ -183,7 +212,6 @@ public class EventsController : Controller
     // *********** TESTE POSTMETODER START
 
     //// POST MED SELECTLIST VENUES
-    //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     //[HttpPost]
     //[ValidateAntiForgeryToken]
     ////public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
@@ -238,98 +266,100 @@ public class EventsController : Controller
 
     // GET: Events/Edit/5
     // public async Task<IActionResult> Edit(int? id)
+
+
     public async Task<IActionResult> Edit(int? id)
-            {
-            if (id == null || _context.Event == null)
-            {
-                return NotFound();
-            }
-
-            var @event = await _context.Event.FindAsync(id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-            return View(@event);
+    {
+        if (id == null || _context.Event == null)
+        {
+            return NotFound();
         }
 
-        // POST: Events/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
-        public async Task<IActionResult> Edit(int id, Event @event)
-
+        var @event = await _context.Event.FindAsync(id);
+        if (@event == null)
         {
+            return NotFound();
+        }
+        return View(@event);
+    }
+
+    // POST: Events/Edit/5
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    //public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description")] Event @event)
+    public async Task<IActionResult> Edit(int id, Event @event)
+
+    {
         if (id != @event.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!EventExists(@event.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(@event);
+        {
+            return NotFound();
         }
 
-        // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        if (ModelState.IsValid)
         {
-            if (id == null || _context.Event == null)
+            try
             {
-                return NotFound();
+                _context.Update(@event);
+                await _context.SaveChangesAsync();
             }
-
-            var @event = await _context.Event
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
+            catch (DbUpdateConcurrencyException)
             {
-                return NotFound();
+                if (!EventExists(@event.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
-
-            return View(@event);
-        }
-
-        // POST: Events/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Event == null)
-            {
-                return Problem("Entity set 'CbsStudentsContext.Event'  is null.");
-            }
-            var @event = await _context.Event.FindAsync(id);
-            if (@event != null)
-            {
-                _context.Event.Remove(@event);
-            }
-            
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool EventExists(int id)
-        {
-          return _context.Event.Any(e => e.Id == id);
-        }
+        return View(@event);
     }
+
+    // GET: Events/Delete/5
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null || _context.Event == null)
+        {
+            return NotFound();
+        }
+
+        var @event = await _context.Event
+            .FirstOrDefaultAsync(m => m.Id == id);
+        if (@event == null)
+        {
+            return NotFound();
+        }
+
+        return View(@event);
+    }
+
+    // POST: Events/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(int id)
+    {
+        if (_context.Event == null)
+        {
+            return Problem("Entity set 'CbsStudentsContext.Event'  is null.");
+        }
+        var @event = await _context.Event.FindAsync(id);
+        if (@event != null)
+        {
+            _context.Event.Remove(@event);
+        }
+
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool EventExists(int id)
+    {
+        return _context.Event.Any(e => e.Id == id);
+    }
+}
 
