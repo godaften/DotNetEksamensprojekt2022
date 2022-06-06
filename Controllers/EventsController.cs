@@ -40,7 +40,7 @@ public class EventsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Index(string sortOrder, string searchString)
     {
-        
+
         // SORT COLUMN TITLES - HVORFOR DE STRENGE SKREVET SOM DE ER?
         ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Title" : "";
         ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
@@ -94,15 +94,25 @@ public class EventsController : Controller
 
 
 
-    // GET: Events/Create
+    // GET: Events/Create //STIG
     public IActionResult Create()
     {
         var vm = new EventCreateEditVm();
 
-        vm.Venues = _context.Venue.ToList().Select(x => new SelectListItem(x.Name, x.VenueId.ToString()));
+        //using (var context = _context)
+
+            //create SelectListItem
+            vm.Venues = _context.Venue.Select(a => new SelectListItem
+            {
+                Text = a.Name, // name to show in html dropdown
+                Value = a.VenueId // value of html dropdown
+            }).ToList();
+
+        //vm.Venues = _context.Venue.ToList().Select(x => new SelectListItem(x.Name, x.VenueId.ToString()));
 
         return View(vm);
     }
+
 
 
 
@@ -114,6 +124,21 @@ public class EventsController : Controller
     {
         if (ModelState.IsValid)
         {
+
+            //var vm2 = new EventCreateEditVm();
+
+            //using (var context = _context)
+
+                //create SelectListItem
+                vm.Venues = _context.Venue.Select(a => new SelectListItem
+                {
+                    Text = a.Name, // name to show in html dropdown
+                    Value = a.VenueId // value of html dropdown
+                }).ToList();
+
+
+
+
 
             // IMAGE
             string uniqueFileName = GetUploadedFileName(vm);

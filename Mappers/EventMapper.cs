@@ -34,8 +34,9 @@ namespace cbsStudents.Mappers
                 Description = vm.Description,
                 ImageName = vm.ImageName,
                 ImageFile = vm.ImageFile,
-                VenueId = vm.VenueId,
-                Venue = vm.Venue,   // NOGET SÆRLIGT MED VENUE?
+                //VenueId = vm.VenueId,
+                VenueId = vm.SelectedVenue
+                //Venue = vm.Venue,   // NOGET SÆRLIGT MED VENUE?
 
             };
 

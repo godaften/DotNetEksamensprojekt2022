@@ -54,22 +54,36 @@ namespace cbsStudents.ViewModels
         public IFormFile ImageFile { get; set; }
 
 
+
+        // SKAL DE BEGGE BRUGES?
         // Navigation Properties Venue
         public string VenueId { get; set; }
         public Venue Venue { get; set; }
 
 
 
-        // Giver ikke mening for databasemodellen, men perfekt mening for vm
-        public string chosenVenueId { get; set; }
+
+        //SelectListeItem type list creating Dropdown 
         public IEnumerable<SelectListItem> Venues { get; set; }
 
+        //for first dropdown selected value
+        public string SelectedVenue { get; set; }
 
-        //// Navigation Properties Eventtype SLETTES
-        //public int EventTypeId { get; set; }
-        //public EventType EventType { get; set; }
+  
 
+
+        // Giver ikke mening for databasemodellen, men perfekt mening for vm
+        //public string chosenVenueId { get; set; }
+        //public IEnumerable<SelectListItem> Venues { get; set; }
 
 
     }
+
+    //public enum EventTypes {
+        
+    //    Comedy,
+    //    Concert,
+    //    Poesi
+
+    //}
 }

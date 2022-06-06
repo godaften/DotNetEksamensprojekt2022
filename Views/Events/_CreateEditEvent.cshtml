@@ -117,6 +117,15 @@
 </div>
 
 
+<div class="form-group row">
+                <div class="col-lg-10">
+            @Html.DropDownListFor(x => Model.SelectedVenue, Model.Venues, "Select Level",  new { @class = "form-control" })
+     @*       @Html.DropDownListFor(model => model.chosenVenueId, Model.Venues, "--Select Employee--")*@
+        </div>
+    </div>
+
+
+
 
 @*OBS - MANGLER  VENUE DROPDOWN*@
 @*             <div class="form-group">
