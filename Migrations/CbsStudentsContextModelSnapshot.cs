@@ -56,7 +56,7 @@ namespace cbsStudents.Migrations
                             CommentId = 1,
                             PostId = 1,
                             Text = "Hello",
-                            TimeStamp = new DateTime(2022, 6, 6, 11, 58, 58, 442, DateTimeKind.Local).AddTicks(5740),
+                            TimeStamp = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8717),
                             UserId = "1"
                         });
                 });
@@ -115,11 +115,41 @@ namespace cbsStudents.Migrations
                             Adress = "Funnystreet 10",
                             City = "Copenhagen",
                             Country = "Denmark",
-                            Description = "going on!",
-                            EventEndDateTime = new DateTime(2022, 6, 6, 11, 58, 58, 442, DateTimeKind.Local).AddTicks(5762),
-                            EventStartDateTime = new DateTime(2022, 6, 6, 11, 58, 58, 442, DateTimeKind.Local).AddTicks(5759),
+                            Description = "Come join everybody having fun!",
+                            EventEndDateTime = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8736),
+                            EventGenre = "Comedy",
+                            EventStartDateTime = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8733),
+                            ImageName = "77a05c90-f3e1-46df-8bae-9e2098da08b6_AA9EA89A-CDF9-4DE0-8FC6-0D17D573BADF.jpeg",
                             Online = false,
-                            Title = "Party"
+                            Title = "All night Fun with Jokes"
+                        },
+                        new
+                        {
+                            Id = 101,
+                            Adress = "Funnystreet 10",
+                            City = "Copenhagen",
+                            Country = "Denmark",
+                            Description = "Greatest voice alive!",
+                            EventEndDateTime = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8741),
+                            EventGenre = "Concert",
+                            EventStartDateTime = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8739),
+                            ImageName = "",
+                            Online = false,
+                            Title = "John live at the stage"
+                        },
+                        new
+                        {
+                            Id = 102,
+                            Adress = "",
+                            City = "",
+                            Country = "",
+                            Description = "Laugh out loud alone!",
+                            EventEndDateTime = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8746),
+                            EventGenre = "Comedy",
+                            EventStartDateTime = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8745),
+                            ImageName = "",
+                            Online = true,
+                            Title = "Fun at home?"
                         });
                 });
 
@@ -156,7 +186,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2022, 6, 6, 11, 58, 58, 442, DateTimeKind.Local).AddTicks(5651),
+                            Created = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8631),
                             Status = 0,
                             Text = "This is post 1",
                             Title = "Post no 1"
@@ -164,7 +194,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 22,
-                            Created = new DateTime(2022, 6, 6, 11, 58, 58, 442, DateTimeKind.Local).AddTicks(5687),
+                            Created = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8666),
                             Status = 0,
                             Text = "This is post 2",
                             Title = "Post no 2"
@@ -172,7 +202,7 @@ namespace cbsStudents.Migrations
                         new
                         {
                             Id = 24,
-                            Created = new DateTime(2022, 6, 6, 11, 58, 58, 442, DateTimeKind.Local).AddTicks(5689),
+                            Created = new DateTime(2022, 6, 6, 13, 45, 49, 248, DateTimeKind.Local).AddTicks(8669),
                             Status = 0,
                             Text = "This is post 3",
                             Title = "Post no 3"
@@ -197,15 +227,21 @@ namespace cbsStudents.Migrations
                     b.HasData(
                         new
                         {
-                            VenueId = "1",
+                            VenueId = "Green",
                             Name = "Green Stage",
                             NumberOfSeats = 100
                         },
                         new
                         {
-                            VenueId = "2",
+                            VenueId = "Small",
                             Name = "Small Room",
                             NumberOfSeats = 200
+                        },
+                        new
+                        {
+                            VenueId = "Hall",
+                            Name = "Hall",
+                            NumberOfSeats = 250
                         });
                 });
 
@@ -330,15 +366,15 @@ namespace cbsStudents.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8e0d311e-da7e-4d1f-bda1-e4b5bf785c5e",
+                            ConcurrencyStamp = "eb99d4ab-78dc-4a24-8c2c-adeb928afe77",
                             Email = "test@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@KEA.DK",
                             NormalizedUserName = "TEST@KEA.DK",
-                            PasswordHash = "AQAAAAEAACcQAAAAENOkz1vSaUNMaQ3HgOdCYf8pYQuMz06sdrca2+PdEIYU36Lwpt1AXx99M7ov/Vbuig==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECvlMGpE7fzkjPQ2dZTrofbdQcnbIQdAMscgD94WeSm6E8oTT+pLl6zuh/BThYB/6g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "fefd3f0a-5c90-4ac3-8c29-9b6b6725574f",
+                            SecurityStamp = "7341e852-a98d-4a30-af5c-d6bdfb4cf3eb",
                             TwoFactorEnabled = false,
                             UserName = "test@kea.dk"
                         },
@@ -346,15 +382,15 @@ namespace cbsStudents.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b0ffb00e-a1f0-43c0-a676-1d1692c43fff",
+                            ConcurrencyStamp = "d31816d0-123c-4e82-adaf-2e4d37b8b3b6",
                             Email = "jj@kea.dk",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JJ@KEA.DK",
                             NormalizedUserName = "JJ@KEA.DK",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKUFDvZCmKEaRLQP2pNkD4mSOm6x4LPYhshFbSuokREieXiVVawYzvyzskGt2ejjfA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJKm+wpzU6wn2e4R8r8UGoGo7+Y91kE9cz8I8i6tuvlX+E3L2eO79mVOTUvoPPJ1zQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "51d1a3ab-644c-45bb-8623-111eb54f89c9",
+                            SecurityStamp = "84650574-9718-42d7-921d-3dfb128d530d",
                             TwoFactorEnabled = false,
                             UserName = "jj@kea.dk"
                         });

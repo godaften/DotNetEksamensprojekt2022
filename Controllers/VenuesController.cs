@@ -8,23 +8,29 @@ using Microsoft.EntityFrameworkCore;
 using CbsStudents.Data;
 using cbsStudents.Models.Entities;
 using cbsStudents.ViewModels;
+using cbsStudents.Mappers;
 
 namespace cbsStudents.Controllers
 {
     public class VenuesController : Controller
     {
-        private readonly CbsStudentsContext _context;
+        private readonly CbsStudentsContext _context; // ?
 
+
+        // CONSTRUCTOR?
         public VenuesController(CbsStudentsContext context)
         {
-            _context = context;
+            //_context = context;
+            this._context = context; // this vigtigt?
         }
+
 
         // GET: Venues
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Venue.ToListAsync());
+            return View(await _context.Venue.ToListAsync());
         }
+
 
         // GET: Venues/Details/5
         public async Task<IActionResult> Details(string id)
@@ -44,27 +50,40 @@ namespace cbsStudents.Controllers
             return View(venue);
         }
 
-        // GET: Venues/Create
+
+        //// GET: Venues/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
         public IActionResult Create()
         {
-            return View();
+            var vm = new VenueVm();
+
+            return View(vm);
         }
 
+
+
+
         // POST: Venues/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(VenueVm venue)
+        public async Task<IActionResult> Create(VenueVm vm)
         {
             if (ModelState.IsValid)
             {
+                var venue = new VenueMapper().mapFromVmToDm(vm); // MAPPER
+
                 _context.Add(venue);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(venue);
+            return View(vm);
         }
+
+
+
 
         // GET: Venues/Edit/5
         public async Task<IActionResult> Edit(string id)
@@ -149,14 +168,14 @@ namespace cbsStudents.Controllers
             {
                 _context.Venue.Remove(venue);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool VenueExists(string id)
         {
-          return _context.Venue.Any(e => e.VenueId == id);
+            return _context.Venue.Any(e => e.VenueId == id);
         }
     }
 }
