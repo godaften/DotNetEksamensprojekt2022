@@ -20,8 +20,8 @@ namespace CbsStudents.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-            //this.SeedEventTypes(builder);
+            base.OnModelCreating(builder); // LÆS OP PÅ
+
             this.UsersSeed(builder);
             this.SeedPosts(builder);
             this.SeedVenues(builder);
@@ -33,17 +33,15 @@ namespace CbsStudents.Data
 
         public DbSet<Event> Event { get; set; }
 
-        //public DbSet<EventType> EventType { get; set; }
         public DbSet<Venue> Venue { get; set; }
 
         public DbSet<Comment> Comment { get; set; }
 
-        //public DbSet<ImageUpload> Images { get; set; }
+        // HVORFOR HAR USERS IKKE ET DBSET?
+
 
         private void UsersSeed(ModelBuilder builder)
         {
-
-
             var user1 = new IdentityUser
             {
                 Id = "1",
@@ -70,7 +68,7 @@ namespace CbsStudents.Data
             user2.PasswordHash = passHash.HashPassword(user2, "aA123456!");
 
 
-
+            // OBS - TJEK OP PÅ
             builder.Entity<IdentityUser>().HasData(
                 user1, user2
             );
@@ -90,36 +88,66 @@ namespace CbsStudents.Data
             );
         }
 
-        //private void SeedEventTypes(ModelBuilder builder)
-        //{
-        //    builder.Entity<EventType>().HasData(
-        //        new EventType() { Id = 1, Name = "Concert" },
-        //        new EventType() { Id = 2, Name = "Comedy" },
-        //        new EventType() { Id = 3, Name = "Sport" });
-        //}
-
 
         private void SeedVenues(ModelBuilder builder)
         {
             builder.Entity<Venue>().HasData(
-                new Venue() { VenueId = "1", Name = "Green Stage", NumberOfSeats = 100 },
-                new Venue() { VenueId = "2", Name = "Small Room", NumberOfSeats = 200 });
-               
-        }
+                new Venue() { VenueId = "Green", Name = "Green Stage", NumberOfSeats = 100 },
+                new Venue() { VenueId = "Small", Name = "Small Room", NumberOfSeats = 200 },
+                new Venue() { VenueId = "Hall", Name = "Hall", NumberOfSeats = 250 });
 
+        }
 
         private void SeedEvents(ModelBuilder builder)
         {
             builder.Entity<Event>().HasData(
-                new Event() { Id = 100, Title = "Party", Description = "going on!", EventStartDateTime = DateTime.Now, 
-                    EventEndDateTime = DateTime.Now, Online=false, Adress ="Funnystreet 10", City ="Copenhagen", Country ="Denmark"}
+                new Event()
+                {
+                    Id = 100,
+                    Title = "All night Fun with Jokes",
+                    EventGenre = "Comedy",
+                    Online = false,
+                    EventStartDateTime = DateTime.Now,
+                    EventEndDateTime = DateTime.Now,
+                    Adress = "Funnystreet 10",
+                    City = "Copenhagen",
+                    Country = "Denmark",
+                    Description = "Come join everybody having fun!",
+                    ImageName = "77a05c90-f3e1-46df-8bae-9e2098da08b6_AA9EA89A-CDF9-4DE0-8FC6-0D17D573BADF.jpeg"
+                },
 
-               );
+                new Event()
+                {
+                    Id = 101,
+                    Title = "John live at the stage",
+                    EventGenre = "Concert",
+                    Online = false,
+                    EventStartDateTime = DateTime.Now,
+                    EventEndDateTime = DateTime.Now,
+                    Adress = "Funnystreet 10",
+                    City = "Copenhagen",
+                    Country = "Denmark",
+                    Description = "Greatest voice alive!",
+                    ImageName = ""
+                },
+
+                new Event()
+                {
+                    Id = 102,
+                    Title = "Fun at home?",
+                    EventGenre = "Comedy",
+                    Online = true,
+                    EventStartDateTime = DateTime.Now,
+                    EventEndDateTime = DateTime.Now,
+                    Adress = "",
+                    City = "",
+                    Country = "",
+                    Description = "Laugh out loud alone!",
+                    ImageName = ""
+                }
+
+             );
         }
-
-
-
-     
 
     }
 }

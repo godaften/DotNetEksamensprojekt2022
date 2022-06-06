@@ -40,9 +40,12 @@ public class EventsController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Index(string sortOrder, string searchString)
     {
-        // HVAD SKER DER?
-        ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "title" : "";
+        
+        // SORT COLUMN TITLES - HVORFOR DE STRENGE SKREVET SOM DE ER?
+        ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Title" : "";
         ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
+
+        // SEARCH FIELD
         ViewData["CurrentFilter"] = searchString;
 
         var events = from e in _context.Event
@@ -54,15 +57,17 @@ public class EventsController : Controller
                                    || e.Description.Contains(searchString));
         }
 
+
         switch (sortOrder)
         {
-            case "title":
+            case "Title":
                 events = events.OrderBy(e => e.Title);
                 break;
             case "Date":
                 events = events.OrderBy(s => s.EventStartDateTime);
                 break;
         }
+
         return View(await events.AsNoTracking().ToListAsync());
     }
 

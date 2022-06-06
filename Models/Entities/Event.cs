@@ -17,8 +17,8 @@ namespace cbsStudents.Models.Entities
         public int Id { get; set; }
 
         public string Title { get; set; }
-             
 
+        [Display(Name = "Starts")]
         [DataType(DataType.DateTime)] // SKAL DEN VÆRE HER ELLER I VM? TEST
         public DateTime EventStartDateTime { get; set; }
 
@@ -50,11 +50,6 @@ namespace cbsStudents.Models.Entities
         public string VenueId { get; set; }
         public Venue Venue { get; set; }
 
-
-
-        //// Navigation Properties Eventtype SKAL FUCKES!
-        //public int? EventTypeId { get; set; }
-        //public EventType EventType { get; set; }
 
     }
 
