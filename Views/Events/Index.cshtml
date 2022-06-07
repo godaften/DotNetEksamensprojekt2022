@@ -28,9 +28,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.EventEndDateTime)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Online)
-            </th>
+
         </tr>
     </thead>
     <tbody class="mb-5">
@@ -49,9 +47,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EventEndDateTime)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Online)
-                </td>
+  
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

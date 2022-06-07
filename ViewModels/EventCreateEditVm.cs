@@ -34,8 +34,8 @@ namespace cbsStudents.ViewModels
         public DateTime EventEndTime { get; set; }
 
 
-        [Display(Name = "Online Event?")]
-        public bool Online { get; set; }
+        //[Display(Name = "Online Event?")]
+        //public bool Online { get; set; }
 
         public string Adress { get; set; }
 

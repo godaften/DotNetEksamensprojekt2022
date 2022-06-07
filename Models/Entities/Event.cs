@@ -32,7 +32,7 @@ namespace cbsStudents.Models.Entities
         [Display(Name = "Type of event")]
         public string EventGenre { get; set; }
 
-        public bool Online { get; set; }
+        //public bool Online { get; set; }
 
         public string Adress { get; set; }
 
@@ -50,7 +50,7 @@ namespace cbsStudents.Models.Entities
         public IFormFile ImageFile { get; set; }
 
 
-        // Navigation Properties Venue  HVAD OG HVORFOR?
+        // Navigation Properties Venue  HVAD OG HVORFOR? Foreignkey
         public string VenueId { get; set; }
         public Venue Venue { get; set; }
 
