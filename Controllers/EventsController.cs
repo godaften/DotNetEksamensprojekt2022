@@ -21,12 +21,11 @@ public class EventsController : Controller
 {
     private CbsStudentsContext _context;
 
-    private readonly IWebHostEnvironment _webHost; // IMAGE
+    private readonly IWebHostEnvironment _webHost;
 
 
     public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
     {
-        //this._context = context;
         _context = context;
         _webHost = webHost;
     }
@@ -40,6 +39,8 @@ public class EventsController : Controller
         // SORT COLUMN TITLES - HVORFOR DE STRENGE SKREVET SOM DE ER?
         ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Title" : "";
         ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
+        // This code receives a sortOrder parameter from the query string in the URL. 
+        // The query string value is provided by ASP.NET MVC as a parameter to the action method.
 
 
         // SEARCH FIELD
@@ -90,6 +91,15 @@ public class EventsController : Controller
     }
 
 
+    private void LoadVenuesOnVm(EventCreateEditVm vm)
+    {
+        vm.Venues = _context.Venue.Select(a => new SelectListItem
+        {
+            Text = a.Name, // name to show in html dropdown
+            Value = a.VenueId // value of html dropdown
+        }).ToList();
+    }
+
 
     // GET: Events/Create
     public IActionResult Create()
@@ -97,34 +107,19 @@ public class EventsController : Controller
         var vm = new EventCreateEditVm();
 
         //create SelectListItem
-        vm.Venues = _context.Venue.Select(a => new SelectListItem
-        {
-            Text = a.Name, // name to show in html dropdown
-            Value = a.VenueId // value of html dropdown
-        }).ToList();
+        LoadVenuesOnVm(vm);
 
         return View(vm);
     }
 
 
-
-
     //POST: Events/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-
     public async Task<IActionResult> Create(EventCreateEditVm vm)
     {
         if (ModelState.IsValid)
         {
-
-            //create SelectListItem
-            vm.Venues = _context.Venue.Select(a => new SelectListItem
-            {
-                Text = a.Name, // name to show in html dropdown
-                Value = a.VenueId // value of html dropdown
-            }).ToList();
-
 
             // IMAGE
             string uniqueFileName = GetUploadedFileName(vm);
@@ -136,8 +131,9 @@ public class EventsController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
 
-
         }
+
+        LoadVenuesOnVm(vm);
 
         return View(vm);
     }
@@ -160,17 +156,9 @@ public class EventsController : Controller
     }
 
 
-
-
     // GET: Events/Edit/5
-     public async Task<IActionResult> Edit(int? id)
+    public async Task<IActionResult> Edit(int id)
     {
-        //var vm = new EventCreateEditVm();
-
-        if (id == null || _context.Event == null)
-        {
-            return NotFound();
-        }
 
         var @event = await _context.Event.FindAsync(id);
 
@@ -178,7 +166,12 @@ public class EventsController : Controller
         {
             return NotFound();
         }
-        return View(@event);
+
+        var vm = new EventMapper().mapFromEventToView(@event); // MAPPER
+
+        LoadVenuesOnVm(vm);
+
+        return View(vm);
     }
 
 
@@ -186,24 +179,23 @@ public class EventsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Event @event)
+    public async Task<IActionResult> Edit(EventCreateEditVm vm)
 
     {
-        if (id != @event.Id)
-        {
-            return NotFound();
-        }
 
         if (ModelState.IsValid)
         {
             try
             {
+                var @event = new EventMapper().mapFromViewToEvent(vm); // MAPPER
+
                 _context.Update(@event);
                 await _context.SaveChangesAsync();
             }
+
             catch (DbUpdateConcurrencyException)
             {
-                if (!EventExists(@event.Id))
+                if (!EventExists(vm.Id))
                 {
                     return NotFound();
                 }
@@ -214,7 +206,10 @@ public class EventsController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(@event);
+
+        LoadVenuesOnVm(vm);
+
+        return View(vm);
     }
 
 

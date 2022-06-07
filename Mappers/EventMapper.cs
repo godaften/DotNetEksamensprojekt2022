@@ -27,16 +27,13 @@ namespace cbsStudents.Mappers
                 Id = vm.Id,
                 Title = vm.Title,
                 EventGenre = vm.EventGenre,
-                //Online = vm.Online,
                 Adress = vm.Adress,
                 City = vm.City,
                 Country = vm.Country,
                 Description = vm.Description,
                 ImageName = vm.ImageName,
                 ImageFile = vm.ImageFile,
-                //VenueId = vm.VenueId,
                 VenueId = vm.SelectedVenue
-                //Venue = vm.Venue,   // NOGET SÆRLIGT MED VENUE?
 
             };
 
@@ -55,6 +52,7 @@ namespace cbsStudents.Mappers
             var endTime = new DateTime(1970, 1, 1, @event.EventStartDateTime.Hour, @event.EventStartDateTime.Minute, @event.EventStartDateTime.Second);
 
             return new EventCreateEditVm
+
             {
 
                 // MAPPER DATETIME FRA DATABASEMODEL TIL DATO OG TID OPDELT I VM
@@ -66,15 +64,13 @@ namespace cbsStudents.Mappers
                 Id = @event.Id,
                 Title = @event.Title,
                 EventGenre = @event.EventGenre,
-                //Online = @event.Online,
                 Adress = @event.Adress,
                 City = @event.City,
                 Country = @event.Country,
                 Description = @event.Description,
                 ImageName = @event.ImageName,
                 ImageFile = @event.ImageFile,
-                VenueId = @event.VenueId,
-                Venue = @event.Venue,   // NOGET SÆRLIGT MED VENUE
+                SelectedVenue = @event.VenueId,
 
             };
         }

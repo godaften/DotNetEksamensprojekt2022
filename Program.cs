@@ -23,22 +23,6 @@ var app = builder.Build();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//var appservice = builder.Build();
-
-//using (var scope = appservice.Services.CreateScope())
-//{
-//    var services = scope.ServiceProvider;
-
-//    SeedDataPosts.Initialize(services);
-//}
-
-
-
-
-
-
-
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

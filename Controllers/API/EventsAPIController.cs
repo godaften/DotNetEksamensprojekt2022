@@ -43,11 +43,10 @@ namespace cbsStudents.Controllers.API
         }
 
         // PUT: api/EventsAPI/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // To protect from overposting attacks, use DTO - see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutEvent(int id, Event @event)
         {
-     
 
             if (id != @event.Id)
             {
@@ -64,7 +63,7 @@ namespace cbsStudents.Controllers.API
             {
                 if (!EventExists(id))
                 {
-                   
+
                     return NotFound();
                 }
                 else
@@ -72,13 +71,13 @@ namespace cbsStudents.Controllers.API
                     throw;
                 }
             }
-           return Ok("Event er opdateret!");
-           // return NoContent();
+            return Ok("Event er opdateret!");
+            // return NoContent();
 
         }
 
         // POST: api/EventsAPI
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // To protect from overposting attacks, use DTO - see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
