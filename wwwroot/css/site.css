@@ -20,3 +20,12 @@ body {
 .decription {
     background-color: yellow;
 }
+
+footer {
+    margin-top:50px !important;
+    position: relative;
+}
+
+.form-group {
+    margin-bottom:20px;
+}

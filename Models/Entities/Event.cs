@@ -18,14 +18,18 @@ namespace cbsStudents.Models.Entities
 
         public string Title { get; set; }
 
-        [Display(Name = "Starts")]
-        [DataType(DataType.DateTime)] // SKAL DEN VÆRE HER ELLER I VM? TEST
+        [Display(Name = "Event Starts")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd  HH:mm}")]
         public DateTime EventStartDateTime { get; set; }
 
 
-        [DataType(DataType.DateTime)] // SKAL DEN VÆRE HER ELLER I VM? TEST
+        [Display(Name = "Event Ends")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd  HH:mm}")]
         public DateTime EventEndDateTime { get; set; }
 
+        [Display(Name = "Type of event")]
         public string EventGenre { get; set; }
 
         public bool Online { get; set; }

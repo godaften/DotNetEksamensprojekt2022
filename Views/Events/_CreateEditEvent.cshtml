@@ -1,13 +1,7 @@
 ﻿@model cbsStudents.ViewModels.EventCreateEditVm;
 
 
-@*<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>*@
-
-
-@*    OBS - TILFØJE VALIDERINGER HVOR DET MANGLER*@
-
-@*            TITLE*@
+@*  TITLE*@
 <div class="form-group">
     <label asp-for="Title" class="control-label"></label>
     <input asp-for="Title" class="form-control mb-3" />
@@ -15,29 +9,29 @@
 </div>
 
 
-
-@*OBS - FÅ DATE OG TIME FELTER PÅ LINJE*@
-@*            EVENT START - time and date*@
+@*  EVENT START*@
 <div class="row">
-    <label asp-for="EventStartDate" class="control-label"></label>
     <div class="col">
+        <label asp-for="EventStartDate" class="control-label"></label>
+
         <input type=date id=e asp-for="EventStartDate" class="form-control">
         <script>
             document.getElementById('e').value = new Date().toISOString().substring(0, 10);
         </script>
-        @*   <input type="date" asp-for="EventStartDate" class="form-control" />*@
         <span asp-validation-for="EventStartDate" class="text-danger"></span>
     </div>
     <div class="col">
         <label asp-for="EventStartTime" class="control-label"></label>
-        <input type="time" value="18:00" asp-for="EventStartTime" class="form-control" />
+        <input type="time" value="20:00" asp-for="EventStartTime" class="form-control" />
+        <span asp-validation-for="EventStartTime" class="text-danger"></span>
     </div>
 </div>
 
-@*            EVENT ENDS - time and date*@
+
+@*  EVENT ENDS*@
 <div class="row">
-    <label asp-for="EventEndDate" class="control-label"></label>
     <div class="col">
+        <label asp-for="EventEndDate" class="control-label"></label>
         <input type=date id=f asp-for="EventEndDate" class="form-control">
         <script>
             document.getElementById('f').value = new Date().toISOString().substring(0, 10);
@@ -45,7 +39,7 @@
         <span asp-validation-for="EventEndDate" class="text-danger"></span>
     </div>
     <div class="col">
-         <label asp-for="EventEndTime" class="control-label"></label>
+        <label asp-for="EventEndTime" class="control-label"></label>
         <input type="time" value="18:00" asp-for="EventEndTime" class="form-control" />
     </div>
 </div>
@@ -54,28 +48,34 @@
 
 @*OBS - LAVE SÅ FLUEBEN I ONLINE DISABLER DE NÆSTE FELTER*@
 @*            ONLINE EVENT?*@
-<div class="form-group mt-3 mb-2">
+@*<div class="form-group mt-3 mb-2">
     <label asp-for="Online" class="control-label"></label>
     <input type="checkbox" asp-for="Online" class="form-check-input" />
     <span asp-validation-for="Online" class="text-danger"></span>
 </div>
+*@
 
-<h4 class="mt-3">Location</h4>
+@*<h4 class="mt-3">Location</h4>*@
 
 
-@*            ADRESS CITY COUNTRY*@
+
+@*  ADRESS*@
 <div class="form-group">
     <label asp-for="Adress" class="control-label"></label>
-    <input asp-for="Adress" class="form-control" />
+    <input asp-for="Adress" id="y" class="form-control" />
     <span asp-validation-for="Adress" class="text-danger"></span>
 </div>
 
+
+@*  CITY*@
 <div class="form-group">
     <label asp-for="City" class="control-label"></label>
     <input asp-for="City" class="form-control" />
     <span asp-validation-for="City" class="text-danger"></span>
 </div>
 
+
+@*  COUNTRY*@
 <div class="form-group">
     <label asp-for="Country" class="control-label"></label>
     <input asp-for="Country" class="form-control" />
@@ -83,8 +83,7 @@
 </div>
 
 
-
-@*EVENT GENRE*@
+@*  EVENT GENRE*@
 <div class="form-group">
     <label asp-for="EventGenre" class="control-label"></label>
     <select asp-for="EventGenre" class="form-control">
@@ -99,8 +98,7 @@
 </div>
 
 
-
-@*            DESCRIPTION*@
+@*  DESCRIPTION*@
 <div class="form-group">
     <label asp-for="Description" class="control-label"></label>
     <textarea asp-for="Description" class="form-control" rows="5"></textarea>
@@ -108,43 +106,34 @@
 </div>
 
 
-@*IMAGE UPLOAD*@
+@*  VENUE DROPDOWN*@
+<div class="form-group row">
+    <div class="col-lg-10">
+        @Html.DropDownListFor(x => Model.SelectedVenue, Model.Venues, "Select Venue",  new { @class = "form-control" })
+    </div>
+</div>
+
+
+@*  IMAGE UPLOAD*@
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>*
-<div>
+<div class="mt-2 mb-2">
     <label asp-for="ImageFile" class="control-label"></label>
-    <input asp-for="ImageFile" accept="image/*" />
+    <input asp-for="ImageFile" accept="image/" />
     <span asp-validation-for="ImageFile" class="text-danger"></span>
 </div>
 
 
-<div class="form-group row">
-                <div class="col-lg-10">
-            @Html.DropDownListFor(x => Model.SelectedVenue, Model.Venues, "Select Level",  new { @class = "form-control" })
-     @*       @Html.DropDownListFor(model => model.chosenVenueId, Model.Venues, "--Select Employee--")*@
-        </div>
-    </div>
-
-
-
-
-@*OBS - MANGLER  VENUE DROPDOWN*@
-@*             <div class="form-group">
-                <label asp-for="@Model.Venues" class="control-label"></label>
-                <select asp-for="@Model.VenueId" class ="form-control" asp-items="@Model.Venue"></select>
-                    <option value="">Select Venue</option>
-            </div>*@
-
-@* @Html.DropDownList(@Model.Venues)*@
-
-
-
-@*            SUBMIT*@
+@*  SUBMIT*@
 <div class="form-group mt-2 mb-3">
     <input asp-page-handler="Upload" input type="submit" value="Create" class="btn btn-primary" />
 </div>
-@*</form>*@
 
 
-<div>
+@*  LINKS*@
+<div class="mb-5">
     <a asp-action="Index">Back to Events</a>
 </div>
+
+
+
+

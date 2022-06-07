@@ -21,17 +21,13 @@ public class EventsController : Controller
 {
     private CbsStudentsContext _context;
 
-    // private readonly UserManager<IdentityUser> _userManager;
-
     private readonly IWebHostEnvironment _webHost; // IMAGE
 
 
-
-    // public EventsController(CbsStudentsContext context, UserManager<IdentityUser> userManager, IWebHostEnvironment webHost)
     public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
     {
-        //   _userManager = userManager;
-        this._context = context;
+        //this._context = context;
+        _context = context;
         _webHost = webHost;
     }
 
@@ -44,6 +40,7 @@ public class EventsController : Controller
         // SORT COLUMN TITLES - HVORFOR DE STRENGE SKREVET SOM DE ER?
         ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Title" : "";
         ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
+
 
         // SEARCH FIELD
         ViewData["CurrentFilter"] = searchString;
@@ -83,7 +80,7 @@ public class EventsController : Controller
         }
 
         var @event = await _context.Event
-            .FirstOrDefaultAsync(m => m.Id == id); // ?
+            .FirstOrDefaultAsync(m => m.Id == id);
         if (@event == null)
         {
             return NotFound();
@@ -94,21 +91,17 @@ public class EventsController : Controller
 
 
 
-    // GET: Events/Create //STIG
+    // GET: Events/Create
     public IActionResult Create()
     {
         var vm = new EventCreateEditVm();
 
-        //using (var context = _context)
-
-            //create SelectListItem
-            vm.Venues = _context.Venue.Select(a => new SelectListItem
-            {
-                Text = a.Name, // name to show in html dropdown
-                Value = a.VenueId // value of html dropdown
-            }).ToList();
-
-        //vm.Venues = _context.Venue.ToList().Select(x => new SelectListItem(x.Name, x.VenueId.ToString()));
+        //create SelectListItem
+        vm.Venues = _context.Venue.Select(a => new SelectListItem
+        {
+            Text = a.Name, // name to show in html dropdown
+            Value = a.VenueId // value of html dropdown
+        }).ToList();
 
         return View(vm);
     }
@@ -125,19 +118,12 @@ public class EventsController : Controller
         if (ModelState.IsValid)
         {
 
-            //var vm2 = new EventCreateEditVm();
-
-            //using (var context = _context)
-
-                //create SelectListItem
-                vm.Venues = _context.Venue.Select(a => new SelectListItem
-                {
-                    Text = a.Name, // name to show in html dropdown
-                    Value = a.VenueId // value of html dropdown
-                }).ToList();
-
-
-
+            //create SelectListItem
+            vm.Venues = _context.Venue.Select(a => new SelectListItem
+            {
+                Text = a.Name, // name to show in html dropdown
+                Value = a.VenueId // value of html dropdown
+            }).ToList();
 
 
             // IMAGE
@@ -174,63 +160,26 @@ public class EventsController : Controller
 
 
 
-    // *********** TESTE POSTMETODER START
-
-    //// POST MED SELECTLIST VENUES
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    ////public async Task<IActionResult> Create([Bind("Id,Title,EventStartDateTime,EventEndDateTime,Online,Adress,City,Country,EventType,Description")] EventVm @event) // Skiftet fra Event til EventVm
-    //public async Task<IActionResult> Create(Event @event) // Skiftet fra Event til EventVm. Tilføj bindings igen - hvilke?
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        EventCreateVm eventCreateVm = new EventCreateVm();
-    //        eventCreateVm.Event = new Event();
-    //        List<SelectListItem> venues = _context.Venue
-    //              .Select(n => new SelectListItem
-    //            {
-    //                Value = n.VenueId,
-    //                Text = n.Name
-    //            }).ToList();
-
-    //        eventCreateVm.Venue = venues;
-
-
-    //        // INSERT RECORD IN DB
-    //        _context.Add(@event);
-    //        await _context.SaveChangesAsync();
-    //        return RedirectToAction(nameof(Index));
-
-    //    }
-
-    //    return View(@event);
-    //}
-
-
-
-    // *********** TESTE POSTMETODER SLUT
-
-
-
 
     // GET: Events/Edit/5
-    // public async Task<IActionResult> Edit(int? id)
-
-
-    public async Task<IActionResult> Edit(int? id)
+     public async Task<IActionResult> Edit(int? id)
     {
+        //var vm = new EventCreateEditVm();
+
         if (id == null || _context.Event == null)
         {
             return NotFound();
         }
 
         var @event = await _context.Event.FindAsync(id);
+
         if (@event == null)
         {
             return NotFound();
         }
         return View(@event);
     }
+
 
     // POST: Events/Edit/5
 

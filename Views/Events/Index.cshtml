@@ -1,65 +1,64 @@
 ﻿@model IEnumerable<cbsStudents.Models.Entities.Event>
-@*
-    ER DET KORREKT MED MODEL HER DA DEN HENTER FRA DB?*@
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Events";
 }
 
-<h1>Index</h1>
+<h1>Events</h1>
 <p>
-     @await Html.PartialAsync("_ShowSearchForm")
+    @await Html.PartialAsync("_ShowSearchForm")
 </p>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Event</a>
 </p>
 <table class="table">
     <thead>
         <tr>
-               <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Title)</a>
-                </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Title)</a>
+            </th>
 
-                        <th>
+            <th>
                 @Html.DisplayNameFor(model => model.EventGenre)
             </th>
-                 <th>
-                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.EventStartDateTime)</a>
-                </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>*@
-    
-@*                        <th>
-                @Html.DisplayNameFor(model => model.EventStartDateTime)
-            </th>*@
-                        <th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.EventStartDateTime)</a>
+            </th>
+
+            <th>
                 @Html.DisplayNameFor(model => model.EventEndDateTime)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Online)
+            </th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventGenre)
-            </td>
-                        <td>
-                @Html.DisplayFor(modelItem => item.EventStartDateTime)
-            </td>
-                        <td>
-                @Html.DisplayFor(modelItem => item.EventEndDateTime)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+    <tbody class="mb-5">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventGenre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventStartDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventEndDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Online)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

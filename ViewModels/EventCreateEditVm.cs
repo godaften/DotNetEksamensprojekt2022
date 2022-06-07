@@ -9,6 +9,9 @@ namespace cbsStudents.ViewModels
     public class EventCreateEditVm
     {
         public int Id { get; set; }
+
+        [Required]
+        [MaxLength(50)]
         public string Title { get; set; }
 
         // EVENT START DATO
@@ -40,6 +43,7 @@ namespace cbsStudents.ViewModels
 
         public string Country { get; set; }
 
+        [DisplayName("Type of event")]
         public string EventGenre { get; set; }
 
         public string Description { get; set; }
@@ -62,28 +66,15 @@ namespace cbsStudents.ViewModels
 
 
 
-
-        //SelectListeItem type list creating Dropdown 
+        // HVORDAN FORKLARER MAN DET?
+        // Giver ikke mening for databasemodellen, men perfekt mening for vm
+        // SelectListeItem type list creating Dropdown 
         public IEnumerable<SelectListItem> Venues { get; set; }
 
-        //for first dropdown selected value
+        // for first dropdown selected value
         public string SelectedVenue { get; set; }
-
-  
-
-
-        // Giver ikke mening for databasemodellen, men perfekt mening for vm
-        //public string chosenVenueId { get; set; }
-        //public IEnumerable<SelectListItem> Venues { get; set; }
-
 
     }
 
-    //public enum EventTypes {
-        
-    //    Comedy,
-    //    Concert,
-    //    Poesi
 
-    //}
 }
