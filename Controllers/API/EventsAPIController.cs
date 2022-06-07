@@ -72,8 +72,7 @@ namespace cbsStudents.Controllers.API
                 }
             }
             return Ok("Event er opdateret!");
-            // return NoContent();
-
+          
         }
 
         // POST: api/EventsAPI

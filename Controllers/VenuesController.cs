@@ -14,14 +14,13 @@ namespace cbsStudents.Controllers
 {
     public class VenuesController : Controller
     {
-        private readonly CbsStudentsContext _context; 
+        private readonly CbsStudentsContext _context;
 
 
-        // CONSTRUCTOR?
         public VenuesController(CbsStudentsContext context)
         {
-            //_context = context;
-            this._context = context; // this vigtigt?
+            _context = context;
+
         }
 
 
@@ -51,11 +50,6 @@ namespace cbsStudents.Controllers
         }
 
 
-        //// GET: Venues/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
         public IActionResult Create()
         {
             var vm = new VenueVm();
