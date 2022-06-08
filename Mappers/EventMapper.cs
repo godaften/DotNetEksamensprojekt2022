@@ -10,20 +10,18 @@ namespace cbsStudents.Mappers
         public Event mapFromViewToEvent(EventCreateEditVm vm)
         {
 
-            // Dato og tid adskilt er godt eks på hvor mapper er smart
-            // VARS TIL AT MAPPE DATO OG TID OPDELT I VM TIL EN DATETIME I DATABASEMODEL
+            // VARIABLER TIL AT MAPPE DATO OG TID OPDELT I VM TIL EN DATETIME I DATABASEMODEL
             var startDateTime = new DateTime(vm.EventStartDate.Year, vm.EventStartDate.Month, vm.EventStartDate.Day,
                 vm.EventStartTime.Hour, vm.EventStartTime.Minute, 0);
 
             var endDateTime = new DateTime(vm.EventEndDate.Year, vm.EventEndDate.Month, vm.EventEndDate.Day,
-              vm.EventEndTime.Hour, vm.EventEndTime.Minute, 0);
+                vm.EventEndTime.Hour, vm.EventEndTime.Minute, 0);
 
-            return new Event // HVORFOR SKAL RETUR VÆRE HER OG IKKE LÆNGERE NEDE?
+            return new Event
+
             {
-                // MAPPER DATO OG TID OPDELT I VM TIL EN DATETIME I DATABASEMODEL
                 EventStartDateTime = startDateTime,
                 EventEndDateTime = endDateTime,
-
                 Id = vm.Id,
                 Title = vm.Title,
                 EventGenre = vm.EventGenre,
@@ -44,7 +42,6 @@ namespace cbsStudents.Mappers
         public EventCreateEditVm mapFromEventToView(Event @event)
         {
 
-            // VAR TIL AT MAPPE DATETIME FRA DATABASEMODEL TIL DATO OG TID OPDELT I VM
             var startDate = new DateTime(@event.EventStartDateTime.Year, @event.EventStartDateTime.Month, @event.EventStartDateTime.Day);
             var startTime = new DateTime(1970, 1, 1, @event.EventStartDateTime.Hour, @event.EventStartDateTime.Minute, @event.EventStartDateTime.Second);
 
@@ -54,13 +51,10 @@ namespace cbsStudents.Mappers
             return new EventCreateEditVm
 
             {
-
-                // MAPPER DATETIME FRA DATABASEMODEL TIL DATO OG TID OPDELT I VM
                 EventStartDate = startDate,
                 EventStartTime = startTime,
                 EventEndDate = endDate,
                 EventEndTime = endTime,
-
                 Id = @event.Id,
                 Title = @event.Title,
                 EventGenre = @event.EventGenre,

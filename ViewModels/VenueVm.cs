@@ -10,8 +10,8 @@ namespace cbsStudents.ViewModels
     {
         [Required]
         [Display(Name = "Give your venue a nice one-word name....")]
-        public string VenueId { get; set; } // SKAL VÆRE EN STREG PGA....
-                                            // SÆTTES TIL AT VÆRE LIGE NAME?
+        public string VenueId { get; set; } 
+                                            
 
         [Display(Name = "Name of venue")]
         public string Name { get; set; }
@@ -20,8 +20,8 @@ namespace cbsStudents.ViewModels
         [Display(Name = "Number of seats")]
         public int NumberOfSeats { get; set; }
 
-        // Navigation Properties BRUGES HVIS JEG SKAL LISTE EVENTS UNDER VENUE - ALLE EVENTS DER HØRER TIL EN VENUE
-        public List<Event> Events { get; set; }
+       
+        //public List<Event> Events { get; set; }
 
 
     }

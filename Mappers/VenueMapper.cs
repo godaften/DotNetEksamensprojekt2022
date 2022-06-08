@@ -12,7 +12,6 @@ namespace cbsStudents.Mappers
 
             return new Venue // HVORFOR SKAL RETUR VÆRE HER OG IKKE LÆNGERE NEDE?
             {
-
                 VenueId = vm.VenueId,
                 Name = vm.Name,
                 NumberOfSeats = vm.NumberOfSeats

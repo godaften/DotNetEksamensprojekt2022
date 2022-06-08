@@ -22,7 +22,7 @@ namespace cbsStudents.Controllers
         // GET: Comments
         public async Task<IActionResult> Index()
         {
-            var cbsStudentsContext = _context.Comment.Include(c => c.Post);
+            var cbsStudentsContext = _context.Comments.Include(c => c.Post);
             return View(await cbsStudentsContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace cbsStudents.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comment
+            var comment = await _context.Comments
                 .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.CommentId == id);
             if (comment == null)
@@ -48,7 +48,7 @@ namespace cbsStudents.Controllers
         // GET: Comments/Create
         public IActionResult Create()
         {
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text");
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Text");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace cbsStudents.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text", comment.PostId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Text", comment.PostId);
             return View(comment);
         }
 
@@ -77,12 +77,12 @@ namespace cbsStudents.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comment.FindAsync(id);
+            var comment = await _context.Comments.FindAsync(id);
             if (comment == null)
             {
                 return NotFound();
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text", comment.PostId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Text", comment.PostId);
             return View(comment);
         }
 
@@ -118,7 +118,7 @@ namespace cbsStudents.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PostId"] = new SelectList(_context.Post, "Id", "Text", comment.PostId);
+            ViewData["PostId"] = new SelectList(_context.Posts, "Id", "Text", comment.PostId);
             return View(comment);
         }
 
@@ -130,7 +130,7 @@ namespace cbsStudents.Controllers
                 return NotFound();
             }
 
-            var comment = await _context.Comment
+            var comment = await _context.Comments
                 .Include(c => c.Post)
                 .FirstOrDefaultAsync(m => m.CommentId == id);
             if (comment == null)
@@ -146,15 +146,15 @@ namespace cbsStudents.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comment = await _context.Comment.FindAsync(id);
-            _context.Comment.Remove(comment);
+            var comment = await _context.Comments.FindAsync(id);
+            _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CommentExists(int id)
         {
-            return _context.Comment.Any(e => e.CommentId == id);
+            return _context.Comments.Any(e => e.CommentId == id);
         }
     }
 }

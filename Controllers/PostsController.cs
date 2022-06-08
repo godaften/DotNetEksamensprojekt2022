@@ -27,7 +27,7 @@ public class PostsController : Controller
         {
             SearchString = "";
         }
-        var posts = from p in _context.Post select p;
+        var posts = from p in _context.Posts select p;
 
         posts = posts.Where(x => x.Title.Contains(SearchString) ||
             x.Text.Contains(SearchString)).Include(y => y.User);
@@ -59,7 +59,7 @@ public class PostsController : Controller
             post.UserId = user.Id;
 
             post.Created = DateTime.Now;
-            _context.Post.Add(post);
+            _context.Posts.Add(post);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -71,7 +71,7 @@ public class PostsController : Controller
 
     public IActionResult Edit(int id)
     {
-        Post p = _context.Post.Include(x => x.Comments).ThenInclude(x => x.User)
+        Post p = _context.Posts.Include(x => x.Comments).ThenInclude(x => x.User)
             .First(x => x.Id == id);
 
         return View(p);
@@ -82,7 +82,7 @@ public class PostsController : Controller
     {
         if (ModelState.IsValid)
         {
-            _context.Post.Update(post);
+            _context.Posts.Update(post);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

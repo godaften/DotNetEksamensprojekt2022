@@ -40,9 +40,10 @@
     </div>
     <div class="col">
         <label asp-for="EventEndTime" class="control-label"></label>
-        <input type="time" value="18:00" asp-for="EventEndTime" class="form-control" />
+        <input type="time" value="22:00" asp-for="EventEndTime" class="form-control" />
     </div>
 </div>
+
 
 @*  ADRESS*@
 <div class="form-group mt-2">
@@ -99,7 +100,6 @@
 </div>
 
 
-
 @*  IMAGE UPLOAD*@
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 <div class="mt-2 mb-2">
@@ -111,7 +111,7 @@
 
 @*  SUBMIT*@
 <div class="form-group mt-2 mb-3">
-    <input asp-page-handler="Upload" input type="submit" value="Create" class="btn btn-primary" />
+    <input asp-page-handler="Upload" input type="submit" value="Submit" class="btn btn-primary" />
 </div>
 
 

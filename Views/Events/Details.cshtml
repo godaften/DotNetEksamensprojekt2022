@@ -67,11 +67,11 @@
     </dl>
     <div class="mb-3">
 
-        <img src="@("~/images/"+Model.ImageName)" asp-append-version="true" width="100px" height="100px" />
+        <img src="@("~/images/"+Model.ImageName)" asp-append-version="true" width="auto" height="100px" />
 
     </div>
 </div>
 <div class="mb-5">
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

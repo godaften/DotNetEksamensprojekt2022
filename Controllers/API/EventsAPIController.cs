@@ -25,14 +25,14 @@ namespace cbsStudents.Controllers.API
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Event>>> GetEvent()
         {
-            return await _context.Event.ToListAsync();
+            return await _context.Events.ToListAsync();
         }
 
         // GET: api/EventsAPI/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Event>> GetEvent(int id)
         {
-            var @event = await _context.Event.FindAsync(id);
+            var @event = await _context.Events.FindAsync(id);
 
             if (@event == null)
             {
@@ -80,7 +80,7 @@ namespace cbsStudents.Controllers.API
         [HttpPost]
         public async Task<ActionResult<Event>> PostEvent(Event @event)
         {
-            _context.Event.Add(@event);
+            _context.Events.Add(@event);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetEvent", new { id = @event.Id }, @event);
@@ -90,13 +90,13 @@ namespace cbsStudents.Controllers.API
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteEvent(int id)
         {
-            var @event = await _context.Event.FindAsync(id);
+            var @event = await _context.Events.FindAsync(id);
             if (@event == null)
             {
                 return NotFound();
             }
 
-            _context.Event.Remove(@event);
+            _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
 
             // return NoContent();
@@ -105,7 +105,7 @@ namespace cbsStudents.Controllers.API
 
         private bool EventExists(int id)
         {
-            return _context.Event.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

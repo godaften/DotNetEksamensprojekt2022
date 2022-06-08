@@ -19,10 +19,8 @@ namespace cbsStudents.Controllers;
 [Authorize]
 public class EventsController : Controller
 {
-    private CbsStudentsContext _context;
-
+    private readonly CbsStudentsContext _context;
     private readonly IWebHostEnvironment _webHost;
-
 
     public EventsController(CbsStudentsContext context, IWebHostEnvironment webHost)
     {
@@ -36,17 +34,14 @@ public class EventsController : Controller
     public async Task<IActionResult> Index(string sortOrder, string searchString)
     {
 
-        // SORT COLUMN TITLES - HVORFOR DE STRENGE SKREVET SOM DE ER?
-        ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Title" : "";
+        // SORT COLUMNS
         ViewData["DateSortParm"] = sortOrder == "Date" ? "date" : "Date";
-        // This code receives a sortOrder parameter from the query string in the URL. 
-        // The query string value is provided by ASP.NET MVC as a parameter to the action method.
 
 
         // SEARCH FIELD
         ViewData["CurrentFilter"] = searchString;
 
-        var events = from e in _context.Event
+        var events = from e in _context.Events
                      select e;
 
         if (!String.IsNullOrEmpty(searchString))
@@ -55,14 +50,13 @@ public class EventsController : Controller
                                    || e.Description.Contains(searchString));
         }
 
-
         switch (sortOrder)
         {
-            case "Title":
-                events = events.OrderBy(e => e.Title);
-                break;
             case "Date":
                 events = events.OrderBy(s => s.EventStartDateTime);
+                break;
+            case "date":
+                events = events.OrderByDescending(s => s.EventStartDateTime);
                 break;
         }
 
@@ -70,18 +64,14 @@ public class EventsController : Controller
     }
 
 
-
     // GET: Events/Details/5
     [AllowAnonymous]
-    public async Task<IActionResult> Details(int? id)
+    public async Task<IActionResult> Details(int id)
     {
-        if (id == null || _context.Event == null)
-        {
-            return NotFound();
-        }
 
-        var @event = await _context.Event
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var @event = await _context.Events
+            .FirstOrDefaultAsync(e => e.Id == id);
+
         if (@event == null)
         {
             return NotFound();
@@ -91,12 +81,14 @@ public class EventsController : Controller
     }
 
 
+    // LOAD VENUES
     private void LoadVenuesOnVm(EventCreateEditVm vm)
     {
-        vm.Venues = _context.Venue.Select(a => new SelectListItem
+        vm.Venues = _context.Venues.Select(a => new SelectListItem
         {
             Text = a.Name, // name to show in html dropdown
             Value = a.VenueId // value of html dropdown
+
         }).ToList();
     }
 
@@ -121,14 +113,14 @@ public class EventsController : Controller
         if (ModelState.IsValid)
         {
 
-            // IMAGE
             string uniqueFileName = GetUploadedFileName(vm);
             vm.ImageName = uniqueFileName;
-            var @event = new EventMapper().mapFromViewToEvent(vm); // MAPPER
 
-            // INSERT RECORD IN DB
+            var @event = new EventMapper().mapFromViewToEvent(vm);
+
             _context.Add(@event);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
 
         }
@@ -160,14 +152,14 @@ public class EventsController : Controller
     public async Task<IActionResult> Edit(int id)
     {
 
-        var @event = await _context.Event.FindAsync(id);
+        var @event = await _context.Events.FindAsync(id);
 
         if (@event == null)
         {
             return NotFound();
         }
 
-        var vm = new EventMapper().mapFromEventToView(@event); // MAPPER
+        var vm = new EventMapper().mapFromEventToView(@event);
 
         LoadVenuesOnVm(vm);
 
@@ -176,7 +168,6 @@ public class EventsController : Controller
 
 
     // POST: Events/Edit/5
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(EventCreateEditVm vm)
@@ -187,7 +178,7 @@ public class EventsController : Controller
         {
             try
             {
-                var @event = new EventMapper().mapFromViewToEvent(vm); // MAPPER
+                var @event = new EventMapper().mapFromViewToEvent(vm);
 
                 _context.Update(@event);
                 await _context.SaveChangesAsync();
@@ -214,15 +205,12 @@ public class EventsController : Controller
 
 
     // GET: Events/Delete/5
-    public async Task<IActionResult> Delete(int? id)
+    public async Task<IActionResult> Delete(int id)
     {
-        if (id == null || _context.Event == null)
-        {
-            return NotFound();
-        }
 
-        var @event = await _context.Event
+        var @event = await _context.Events
             .FirstOrDefaultAsync(m => m.Id == id);
+
         if (@event == null)
         {
             return NotFound();
@@ -237,14 +225,16 @@ public class EventsController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        if (_context.Event == null)
+        if (_context.Events == null)
         {
             return Problem("Entity set 'CbsStudentsContext.Event'  is null.");
         }
-        var @event = await _context.Event.FindAsync(id);
+
+        var @event = await _context.Events.FindAsync(id);
+
         if (@event != null)
         {
-            _context.Event.Remove(@event);
+            _context.Events.Remove(@event);
         }
 
         await _context.SaveChangesAsync();
@@ -253,7 +243,7 @@ public class EventsController : Controller
 
     private bool EventExists(int id)
     {
-        return _context.Event.Any(e => e.Id == id);
+        return _context.Events.Any(e => e.Id == id);
     }
 }
 

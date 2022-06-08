@@ -20,7 +20,7 @@ namespace CbsStudents.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder); // LÆS OP PÅ
+            base.OnModelCreating(builder); 
 
             this.UsersSeed(builder);
             this.SeedPosts(builder);
@@ -29,17 +29,15 @@ namespace CbsStudents.Data
             this.SeedEvents(builder);
         }
 
-        public DbSet<Post> Post { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
-        public DbSet<Event> Event { get; set; }
+        public DbSet<Event> Events { get; set; }
 
-        public DbSet<Venue> Venue { get; set; }
+        public DbSet<Venue> Venues { get; set; }
 
-        public DbSet<Comment> Comment { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
-        // HVORFOR HAR USERS IKKE ET DBSET?
-
-
+        
         private void UsersSeed(ModelBuilder builder)
         {
             var user1 = new IdentityUser
@@ -67,8 +65,7 @@ namespace CbsStudents.Data
             user1.PasswordHash = passHash.HashPassword(user1, "aA123456!");
             user2.PasswordHash = passHash.HashPassword(user2, "aA123456!");
 
-
-            // OBS - TJEK OP PÅ
+                       
             builder.Entity<IdentityUser>().HasData(
                 user1, user2
             );

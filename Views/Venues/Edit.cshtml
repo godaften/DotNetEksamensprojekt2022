@@ -1,4 +1,5 @@
-﻿@model cbsStudents.ViewModels.VenueVm;
+﻿@*@model cbsStudents.ViewModels.VenueVm;*@
+@model cbsStudents.Models.Entities.Venue
 
 @{
     ViewData["Title"] = "Edit Venue";
@@ -15,7 +16,22 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            @await Html.PartialAsync("_CreateEditVenue")
+         @*   @await Html.PartialAsync("_CreateEditVenue")*@
+          <div class="form-group">
+                <label asp-for="VenueId" class="control-label"></label>
+                <input asp-for="VenueId" class="form-control" />
+                <span asp-validation-for="VenueId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberOfSeats" class="control-label"></label>
+                <input asp-for="NumberOfSeats" class="form-control" />
+                <span asp-validation-for="NumberOfSeats" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="Update" class="btn btn-primary" />

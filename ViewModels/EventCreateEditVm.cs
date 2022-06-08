@@ -39,6 +39,7 @@ namespace cbsStudents.ViewModels
 
         public string Country { get; set; }
 
+
         [DisplayName("Type of event")]
         public string EventGenre { get; set; }
 
@@ -54,23 +55,10 @@ namespace cbsStudents.ViewModels
         public IFormFile ImageFile { get; set; }
 
 
-
-        // SKAL DE BEGGE BRUGES?
-        // Navigation Properties Venue
-        public string VenueId { get; set; }
-        public Venue Venue { get; set; }
-
-
-
-        // HVORDAN FORKLARER MAN DET?
-        // Giver ikke mening for databasemodellen, men perfekt mening for vm
-        // SelectListeItem type list creating Dropdown 
+        // SelectListeItem for dropdown
         public IEnumerable<SelectListItem> Venues { get; set; }
-
-        // for first dropdown selected value
         public string SelectedVenue { get; set; }
 
     }
-
 
 }
